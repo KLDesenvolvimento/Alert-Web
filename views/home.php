@@ -31,10 +31,10 @@
           <div class="card">
             <div class="card-image">
               <img src="../imagens/cds.png">
-              <span class="card-title black-text" style="font-size: 30px;"><b>O site WEB HELP</b></span>
+              <span class="card-title black-text" style="font-size: 30px;"><b>O site ALERT WEB</b></span>
             </div>
             <div class="card-content">
-              <p>O WEB HELP é desenvolvido para facilitar o trabalho dos funcionários da empresa, atuando principalmente como uma base de dados com várias ferramentas em um único local, como por exemplo: 
+              <p>O ALERT WEB é desenvolvido para facilitar o trabalho dos funcionários da empresa, atuando principalmente como uma base de dados com várias ferramentas em um único local, como por exemplo: 
               Manuais, Comandos SQL, Problemas e suas Soluções, Lista de Ramais, entre outras funcionalidades.</p><p>O melhor de tudo é que o funcionário poderá ajudar com a ampliação desses materiais ja disponibilizados, entrando em contato 
               com a gente e mandando sua idéia para uma análise, para que assim possamos ampliar nossa base de conhecimento.</p>
             </div>
