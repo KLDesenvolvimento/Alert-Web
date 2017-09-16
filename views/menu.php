@@ -50,6 +50,8 @@
 			</ul>
 			<ul class="left hide-on-med-and-down">
 				<li><a href="http://helpdesk.servhost.com.br/admin" target="_blank">HelpDesk</a></li>
+				<li><a href="../alertDesk/views/consTicket.php">Alert Desk</a></li>
+				<li><a href="../alertCall/views/clientes.php">Alert Call</a></li>
 				<li><a href="http://ponttierp.com/cds" target="_blank">Pontti</a></li>
 			</ul>
 			<!--botao de sair para encerrar a session-->

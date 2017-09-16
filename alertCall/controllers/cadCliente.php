@@ -1,0 +1,48 @@
+<?php
+	
+	require_once "../../controllers/conexaoBD.php";//instancia do banco de dados
+
+	$conexaoBD = new conexaoBD();//armazena a classe de conexao com o banco de dados na variavel
+	$link = $conexaoBD->conectar();//armazena o retorno da conexao com o banco de dados
+
+	//vairaveis
+	$nomeCliente = $_POST['nomeCliente'];
+	$cnpjCliente = $_POST['cnpjCliente'];
+	$inscEst = $_POST['inscEst'];
+	$emailCliente = $_POST['emailCliente'];
+	$telefoneCliente = $_POST['telefoneCliente'];
+	$suporteCliente = $_POST['suporteCliente'];
+	$cepCliente = $_POST['cepCliente'];
+	$ruaCliente = $_POST['ruaCliente'];
+	$numCliente = $_POST['numCliente'];
+	$bairroCliente = $_POST['bairroCliente'];
+	$cidadeCliente = $_POST['cidadeCliente'];
+	$ufCliente = $_POST['ufCliente'];
+	$obsCliente = $_POST['obsCliente'];
+
+	$selectCliente = " SELECT cnpjCliente, inscEst FROM  clientes WHERE cnpjCliente = '$cnpjCliente' AND inscEst = '$inscEst'";
+	$resultSelect = mysqli_query($link, $selectCliente);
+	$total = mysqli_num_rows($resultSelect);
+
+	if($total > 0)
+	{
+		header('Location:http://localhost/alert_web/alertCall/views/cadCliente.php?resposta=erro');
+	}
+	else
+	{
+
+		$insertCliente = " INSERT INTO clientes (nomeCliente, cnpjCliente, inscEst, emailCliente, telefoneCliente, suporteCliente, cepCliente, ruaCliente, numCliente, bairroCliente, cidadeCliente, ufCliente, obsCliente) VALUES ('$nomeCliente', '$cnpjCliente', '$inscEst', '$emailCliente', '$telefoneCliente', '$suporteCliente', '$cepCliente', '$ruaCliente', '$numCliente', '$bairroCliente', '$cidadeCliente', '$ufCliente', '$obsCliente') ";
+		$resultCliente = mysqli_query($link, $insertCliente);
+
+		if($resultCliente)
+		{
+			header('Location:http://localhost/alert_web/alertCall/views/cadCliente.php?resposta=sucesso');
+		}else{
+			header('Location:http://localhost/alert_web/alertCall/views/cadCliente.php?resposta=erro');
+		}
+
+	}//fim do if
+
+	mysqli_close($link);//fecha a conexao com o banco de dados
+
+?>
