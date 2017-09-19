@@ -18,7 +18,6 @@
 	<li><a href="Cadastro/cadRamais.php">Ramal</a></li>
 	<li><a href="Cadastro/cadPontuacao.php">Pontuações</a></li>
 	<li><a href="Cadastro/cadProblemaSolucao.php">P/S</a></li>
-	<li><a href="Cadastro/cadCliente.php">Cliente</a></li>
 </ul>
 <!--fim submenu cadastro-->
 

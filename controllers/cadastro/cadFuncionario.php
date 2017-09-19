@@ -13,6 +13,23 @@
 	$tipoAcesso = $_POST['acesso'];
 	$senhaMD5 = MD5($senha);
 
+	if(!isset($nomeFuncionario)){
+		$erro = "Nome do funcionario não pode ser em branco.";
+		echo "<script>alert('$erro'); window.location.href = '../../views/Cadastro/cadFuncionario.php';</script> ";
+	}else if(!isset($usuario)){
+		$erro = "Usuário não pode ser em branco.";
+		echo "<script>alert('$erro'); window.location.href = '../../views/Cadastro/cadFuncionario.php';</script> ";
+	}else if(isset($senha)){
+		$erro = "Senha não pode ser em branco.";
+		echo "<script>alert('$erro'); window.location.href = '../../views/Cadastro/cadFuncionario.php';</script> ";
+	}else if(!isset($fkSetor)){
+		$erro = "Setor não pode ser em branco.";
+		echo "<script>alert('$erro'); window.location.href = '../../views/Cadastro/cadFuncionario.php';</script> ";
+	}else if(!isset($tipoAcesso)){
+		$erro = "Tipo de acesso do funcionário não pode ser em branco.";
+		echo "<script>alert('$erro'); window.location.href = '../../views/Cadastro/cadFuncionario.php';</script> ";
+	}
+
 	//validação de usuario igual
 	$selectUsuario = " SELECT usuario FROM funcionario WHERE usuario = '$usuario' ";
 	$resultUsuario = mysqli_query($link, $selectUsuario);
@@ -30,13 +47,11 @@
 
 	if($resultFuncionario){
 
-		header('Location:../../views/cadastro/cadFuncionario.php?resposta=sucesso');
-		echo "<script>alert('Cadastro realizado com sucesso')</script>";
+		echo "<script>alert('Cadastro realizado com sucesso'); window.location.href = '../../views/Cadastro/cadFuncionario.php';</script> ";
 
 	}else{
 
-		header('Location:../../views/cadastro/cadFuncionario.php?resposta=erro');
-		echo "<script>alert('Falha ao cadastrar')</script>";
+		echo "<script>alert('Erro ao cadastrar'); window.location.href = '../../views/Cadastro/cadFuncionario.php';</script> ";
 
 	}//fim do if
 

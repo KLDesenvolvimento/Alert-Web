@@ -10,21 +10,21 @@
 	$selectSetor = " SELECT * FROM setor ORDER BY setor ASC ";//comando SQL de consulta na tabela Setor
 	$resultSetor = mysqli_query($link, $selectSetor);//executa o comando SQL acima
 
-	if(isset($_GET) && !empty($_GET['resposta']))//verifica se a variavel resposta tem valor ou se esta nula
-	{//inicio do if
+	// if(isset($_GET) && !empty($_GET['resposta']))//verifica se a variavel resposta tem valor ou se esta nula
+	// {//inicio do if
 
-		$resposta = $_GET['resposta'];//armazena o valor do retorno resposta e armazena na variavel
+	// 	$resposta = $_GET['resposta'];//armazena o valor do retorno resposta e armazena na variavel
 
-		if($resposta == 'sucesso')//se o valor recebido for igual a sucesso irá exibir a seguinte mensagem
-		{//inicio do if
-			echo " <script> alert('Cadastro realizado com sucesso!'); window.location.href = 'http://localhost/alert_web/views/Cadastro/cadComando.php'; </script> ";
-		}//ifm do if
-		else if($resposta == 'erro')//se for igual a erro exibe a seguinte mensagem
-		{//inicio do else if
-			echo " <script> alert('Erro ao cadastrar!'); window.location.href = 'http://localhost/alert_web/views/Cadastro/cadComando.php'; </script> ";
-		}//fim do else if
+	// 	if($resposta == 'sucesso')//se o valor recebido for igual a sucesso irá exibir a seguinte mensagem
+	// 	{//inicio do if
+	// 		echo " <script> alert('Cadastro realizado com sucesso!'); window.location.href = 'http://localhost/alert_web/views/Cadastro/cadFuncionario.php'; </script> ";
+	// 	}//ifm do if
+	// 	else if($resposta == 'erro')//se for igual a erro exibe a seguinte mensagem
+	// 	{//inicio do else if
+	// 		echo " <script> alert('Erro ao cadastrar!'); window.location.href = 'http://localhost/alert_web/views/Cadastro/cadFuncionario.php'; </script> ";
+	// 	}//fim do else if
 
-	}//fim do if
+	// }//fim do if
 
 	mysqli_close($link);//fecha a conexao com o banco de dados
 
