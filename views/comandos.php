@@ -48,6 +48,7 @@
 <div class="row">
 	<div class="col s12 m12 l12">
 		<div class="card-panel">
+			<h5 class="center">Consulta de Comandos</h5>
 			<ul class="collapsible popout" data-collapsible="accordion">
 				
 				<?php
@@ -65,10 +66,12 @@
 
 							<li>
 								<div class='collapsible-header'><i class='material-icons'>label</i>$titulo[$indice]</div>
+								
 								<div class='collapsible-body'><span>
 									<b>Comando SQL:</b> <br>$descricao[$indice]<br></br>
 									<b>Autor:</b> $funcionario[$indice]<br></br>
-									<b>Data Inclusão:</b> $data[$indice]
+									<b>Data Inclusão:</b> $data[$indice]<br></br>
+									<button class='btn waves-effect light-blue darken-4' href=''>Deletar</button>
 								</span></div>
 							</li>
 

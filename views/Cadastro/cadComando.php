@@ -72,9 +72,9 @@
 									?>
 								</select>
 							</div>
-							<div class="input-field col s2 m2 l2">
+							<!--<div class="input-field col s2 m2 l2">
 								<input type="date" class="datepicker" name="dataInclusao" id="campoDataInclusao">
-							</div>
+							</div>-->
 						</div><!--row-->
 						<div class="row">
 							<div class="input-field col s6 l6 m6">

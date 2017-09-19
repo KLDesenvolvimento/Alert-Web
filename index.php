@@ -1,3 +1,12 @@
+<?php
+	session_start();//inicia o session
+
+	if(isset($_SESSION['usuarioLog'])){//verifica se ja existe uma session aberta
+		header('Location:views/home.php');//caso essa session exista ele voltara para o index que seria a tela de login, assim nao possibilitando o acesso ao sistema
+		die();//logo depois ele encerra toda a conexao
+	}//fim do if
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>

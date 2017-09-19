@@ -25,8 +25,7 @@
 <div class="row">
 	<div class="card-panel">
 		<ul class="collapsible popout" data-collapsible="accordion">
-			<fieldset>
-				<table class="centered striped "><!--tipo de tabela-->
+				<table class="centered striped col s3 m3 l3" style="border: 1px solid #000"><!--tipo de tabela-->
 					<thead><!--inicio do cabeçalho da tabela-->
 						<?php
 							$data_incio = mktime(0, 0, 0, date('m') , 1 , date('Y')); // pega o primeiro dia do mês e a primeira hora 
@@ -145,9 +144,6 @@
 
 					</tbody>				
 				</table>	
-			</fieldset>	
-			<br>
-			<fieldset>
 				<table class="centered striped "><!--tipo de tabela-->
 					<thead><!--inicio do cabeçalho da tabela-->
 						<?php 	
@@ -242,7 +238,7 @@
 							for ($indice=0; $indice <$totalFunc  ; $indice++) { 
 							
 							$indVerde = tabelaPontuacao($link,$vetorId[$indice],$periodoDias[1],3);
-							echo $indVerde;
+							//echo $indVerde;
 							
 							
 						}	
@@ -251,7 +247,7 @@
 								echo"
 								<tr>
 									<td>".$vetorNome[$key]."</td>
-									<td>Verde".$indVerde."</td>
+									<td>Verde ".$indVerde."</td>
 								</tr>
 									
 							";
@@ -264,7 +260,6 @@
 						
 					</tbody>
 				</table>
-			</fieldset>	
 		</ul>
 	</div>
 </div>

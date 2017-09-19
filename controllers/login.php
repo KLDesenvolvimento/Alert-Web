@@ -2,10 +2,10 @@
 	
 	session_start();//inicia o session
 
-	if(isset($_SESSION['usuarioLog'])){//verifica se ja existe uma session aberta
-		header('location:http://localhost/alert_web/');//caso essa session exista ele voltara para o index que seria a tela de login, assim nao possibilitando o acesso ao sistema
-		die();//logo depois ele encerra toda a conexao
-	}//fim do if
+	// if(isset($_SESSION['usuarioLog'])){//verifica se ja existe uma session aberta
+	// 	header('Location:../views/home.php');//caso essa session exista ele voltara para o index que seria a tela de login, assim nao possibilitando o acesso ao sistema
+	// 	die();//logo depois ele encerra toda a conexao
+	// }//fim do if
 
 	require_once "conexaoBD.php";//instancia a classe de conxao com o banco de dados
 
@@ -37,10 +37,10 @@
 		$_SESSION['setor'] = $fkSetor;//inicia uma session com o setor do funcionario logado
 		$_SESSION['acesso'] = $tipoAcesso;//inicia uma session com o tipo de acesso do funcionario logado
 
-		header('Location:http://localhost/alert_web/views/home.php');//abre o sistema mandando o funcionario diretamente para a tela home do site
+		header('Location:../views/home.php');//abre o sistema mandando o funcionario diretamente para a tela home do site
 
 	}else{//senao for verdadeira a condição acima
-		header('location:http://localhost/alert_web/');//ele voltara para a tela de login
+		header('location:../index.php');//ele voltara para a tela de login
 		//echo "<script>alert('Usuário e Senha não encontrado')</script>";
 	}
 
