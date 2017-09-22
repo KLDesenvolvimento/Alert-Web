@@ -5,7 +5,9 @@
 	$conexaoBD = new conexaoBD();
 	$link = $conexaoBD->conectar();
 
-	$selectCliente = " SELECT  *  FROM clientes  ";
+	$id = $_GET['id'];
+
+	$selectCliente = " SELECT  *  FROM clientes WHERE idCliente = '$id' ";
 	$resultSelect = mysqli_query($link, $selectCliente);
 	$total = mysqli_num_rows($resultSelect);
 
@@ -56,16 +58,6 @@
 			<div class="row">
 				<h5 class="center">Consulta de Cliente</h5>
 				<div class="row">
-					<form class="col s12 m12 l12" method="POST" action="../../controllers/cadastro/cadCliente.php">
-						<div class="row">
-							<div class="input-field col s4 m4 l4">
-								<input type="search" name="pesquisaCliente">
-								<label>Pesquisar cliente</label>
-							</div>
-							<div>
-								<button class="btn waves-effect light-blue darken-4" style="margin-top: 20px;">Pesquisar</button>
-							</div>
-						</div><!--row-->
 						<div class="row">
 							<h5 class="center">Dados Pessoais</h5>
 							<table>
@@ -73,30 +65,27 @@
 									<tr>
 										<th>Nome</th>
 										<th>CNPJ</th>
-										<th>Insc Est</th>
+										<th>Inscrição Estadual</th>
 										<th>E-Mail</th>
 										<th>Telefone</th>
 									</tr>
 								</thead>
 								<tbody>
 									<?php
-									
-										for($indice = 0; $indice < $total; $indice++){
+
+										for($indice = 0; $indice < 1; $indice++){
 
 											echo "
 				
 												<tr>
 													<td>$nomeCliente[$indice]</td>
+													<td>$cnpjCliente[$indice]</td>
+													<td>$inscEst[$indice]</td>
+													<td>$emailCliente[$indice]</td>
 													<td>$telefoneCliente[$indice]</td>
-													<td>$ruaCliente[$indice]</td>
-													<td>$bairroCliente[$indice]</td>
-													<td>$cidadeCliente[$indice]</td>
-													<td>$ufCliente[$indice]</td>
-													<td><button class='btn waves-effect light-blue darken-4' href='#!'>Detalhes</button></td>
 												</tr>
 
 											";
-
 										}
 
 									?>
@@ -113,20 +102,39 @@
 										<th>Bairro</th>
 										<th>Cidade</th>
 										<th>UF</th>
-										<th>Detalhes</th>
 									</tr>
 								</thead>
 								<tbody>
 									<?php
 
+									for($indice = 0; $indice < 1; $indice++){
 
+										echo "
+				
+												<tr>
+													<td>$ruaCliente[$indice]</td>
+													<td>$numCliente[$indice]</td>
+													<td>$bairroCliente[$indice]</td>
+													<td>$cidadeCliente[$indice]</td>
+													<td>$ufCliente[$indice]</td>
+												</tr>
+
+											";
+										}
 
 									?>
 								</tbody>
 							</table>
 						</div><!--row-->
-					</form>
-				</div>
+						<div class="row">
+							
+						</div>
+						<div class="row">
+							<div class="center">
+								<a class="btn waves-effect light-blue darken-4" href="clientes.php?pesquisa=">Voltar</a>
+							</div><!--center-->
+						</div>
+				</div><!--row-->
 			</div>
 		</div>
 	</div>

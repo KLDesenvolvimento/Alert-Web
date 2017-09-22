@@ -10,7 +10,7 @@
 		</ul>
 		<ul id="clientes" class="dropdown-content">
 			<li><a href="http://localhost/alert_web/alertCall/views/cadCliente.php">Cadastrar</a></li>
-			<li><a href="clientes.php">Consultar</a></li>
+			<li><a href="clientes.php?pesquisa=">Consultar</a></li>
 		</ul><!--dropdown-content-->
 	</div><!--nav-wrapper-->
 </nav>

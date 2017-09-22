@@ -5,26 +5,57 @@
 	$conexaoBD = new conexaoBD();
 	$link = $conexaoBD->conectar();
 
-	$selectCliente = " SELECT  *  FROM clientes  ";
-	$resultSelect = mysqli_query($link, $selectCliente);
-	$total = mysqli_num_rows($resultSelect);
+	$pesquisa = $_GET['pesquisa'];
 
-	while($tblCliente = mysqli_fetch_array($resultSelect)){
+	if($pesquisa == null){
 
-		$idCliente[] = $tblCliente['idCliente'];
-		$nomeCliente[] = $tblCliente['nomeCliente'];
-		$cnpjCliente[] = $tblCliente['cnpjCliente'];
-		$inscEst[] = $tblCliente['inscEst'];
-		$emailCliente[] = $tblCliente['emailCliente'];
-		$telefoneCliente[] = $tblCliente['telefoneCliente'];
-		$numCliente[] = $tblCliente['numCliente'];
-		$cepCliente[] = $tblCliente['cepCliente'];
-		$ruaCliente[] = $tblCliente['ruaCliente'];
-		$bairroCliente[] = $tblCliente['BairroCliente'];
-		$cidadeCliente[] = $tblCliente['cidadeCliente'];
-		$ufCliente[] = $tblCliente['ufCliente'];
-		$suporteCliente[] = $tblCliente['suporteCliente'];
-		$obsCliente[] = $tblCliente['obsCliente'];
+		$selectCliente = " SELECT  *  FROM clientes  ";
+		$resultSelect = mysqli_query($link, $selectCliente);
+		$total = mysqli_num_rows($resultSelect);
+
+		while($tblCliente = mysqli_fetch_array($resultSelect)){
+
+			$idCliente[] = $tblCliente['idCliente'];
+			$nomeCliente[] = $tblCliente['nomeCliente'];
+			$cnpjCliente[] = $tblCliente['cnpjCliente'];
+			$inscEst[] = $tblCliente['inscEst'];
+			$emailCliente[] = $tblCliente['emailCliente'];
+			$telefoneCliente[] = $tblCliente['telefoneCliente'];
+			$numCliente[] = $tblCliente['numCliente'];
+			$cepCliente[] = $tblCliente['cepCliente'];
+			$ruaCliente[] = $tblCliente['ruaCliente'];
+			$bairroCliente[] = $tblCliente['BairroCliente'];
+			$cidadeCliente[] = $tblCliente['cidadeCliente'];
+			$ufCliente[] = $tblCliente['ufCliente'];
+			$suporteCliente[] = $tblCliente['suporteCliente'];
+			$obsCliente[] = $tblCliente['obsCliente'];
+
+		}
+
+	}else{
+
+		$selectCliente = " SELECT  *  FROM clientes WHERE nomeCliente LIKE '%$pesquisa%' OR cnpjCliente LIKE '%$pesquisa%' OR inscEst LIKE '%$pesquisa%' OR emailCliente LIKE '%$pesquisa%' OR telefoneCliente LIKE '%$pesquisa%' OR cepCliente LIKE '%$pesquisa%' OR suporteCliente LIKE '%$pesquisa%'  ";
+		$resultSelect = mysqli_query($link, $selectCliente);
+		$total = mysqli_num_rows($resultSelect);
+
+		while($tblCliente = mysqli_fetch_array($resultSelect)){
+
+			$idCliente[] = $tblCliente['idCliente'];
+			$nomeCliente[] = $tblCliente['nomeCliente'];
+			$cnpjCliente[] = $tblCliente['cnpjCliente'];
+			$inscEst[] = $tblCliente['inscEst'];
+			$emailCliente[] = $tblCliente['emailCliente'];
+			$telefoneCliente[] = $tblCliente['telefoneCliente'];
+			$numCliente[] = $tblCliente['numCliente'];
+			$cepCliente[] = $tblCliente['cepCliente'];
+			$ruaCliente[] = $tblCliente['ruaCliente'];
+			$bairroCliente[] = $tblCliente['BairroCliente'];
+			$cidadeCliente[] = $tblCliente['cidadeCliente'];
+			$ufCliente[] = $tblCliente['ufCliente'];
+			$suporteCliente[] = $tblCliente['suporteCliente'];
+			$obsCliente[] = $tblCliente['obsCliente'];
+
+		}
 
 	}
 
@@ -56,7 +87,7 @@
 			<div class="row">
 				<h5 class="center">Consulta de Cliente</h5>
 				<div class="row">
-					<form class="col s12 m12 l12" method="POST" action="../../controllers/cadastro/cadCliente.php">
+					<form class="col s12 m12 l12" method="POST" action="../controllers/pesquisa.php">
 						<div class="row">
 							<div class="input-field col s4 m4 l4">
 								<input type="search" name="pesquisaCliente">
@@ -93,7 +124,7 @@
 													<td>$bairroCliente[$indice]</td>
 													<td>$cidadeCliente[$indice]</td>
 													<td>$ufCliente[$indice]</td>
-													<td><a class='center' href='detalhes.php'>Detalhes</a></td>
+													<td><a class='btn waves-effect light-blue darken-4' href='detalhes.php?id=$idCliente[$indice]'>Detalhes</a></td>
 												</tr>
 
 											";
