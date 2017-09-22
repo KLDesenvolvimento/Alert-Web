@@ -34,7 +34,7 @@
 
 	}else{
 
-		$selectCliente = " SELECT  *  FROM clientes WHERE nomeCliente LIKE '%$pesquisa%' OR cnpjCliente LIKE '%$pesquisa%' OR inscEst LIKE '%$pesquisa%' OR emailCliente LIKE '%$pesquisa%' OR telefoneCliente LIKE '%$pesquisa%' OR cepCliente LIKE '%$pesquisa%' OR suporteCliente LIKE '%$pesquisa%'  ";
+		$selectCliente = " SELECT  *  FROM clientes WHERE nomeCliente LIKE '%$pesquisa%' OR cnpjCliente LIKE '%$pesquisa%' OR inscEst LIKE '%$pesquisa%' OR emailCliente LIKE '%$pesquisa%' OR telefoneCliente LIKE '%$pesquisa%' OR ufCliente LIKE '%$pesquisa%' OR suporteCliente LIKE '%$pesquisa%' OR cidadeCliente LIKE '%$pesquisa%' ";
 		$resultSelect = mysqli_query($link, $selectCliente);
 		$total = mysqli_num_rows($resultSelect);
 
