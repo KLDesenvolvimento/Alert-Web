@@ -40,7 +40,9 @@
 		header('Location:../views/home.php');//abre o sistema mandando o funcionario diretamente para a tela home do site
 
 	}else{//senao for verdadeira a condição acima
-		header('location:../index.php');//ele voltara para a tela de login
+
+		echo "<script>alert('Usuário ou senha inválidos'); window.location.href='../index.php'; </script>";
+		// header('location:../index.php');//ele voltara para a tela de login
 		//echo "<script>alert('Usuário e Senha não encontrado')</script>";
 	}
 

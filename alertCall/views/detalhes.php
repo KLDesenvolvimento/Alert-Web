@@ -67,16 +67,15 @@
 							</div>
 						</div><!--row-->
 						<div class="row">
+							<h5 class="center">Dados Pessoais</h5>
 							<table>
 								<thead>
 									<tr>
 										<th>Nome</th>
+										<th>CNPJ</th>
+										<th>Insc Est</th>
+										<th>E-Mail</th>
 										<th>Telefone</th>
-										<th>Rua</th>
-										<th>Bairro</th>
-										<th>Cidade</th>
-										<th>UF</th>
-										<th>Detalhes</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -93,7 +92,7 @@
 													<td>$bairroCliente[$indice]</td>
 													<td>$cidadeCliente[$indice]</td>
 													<td>$ufCliente[$indice]</td>
-													<td><a class='center' href='detalhes.php'>Detalhes</a></td>
+													<td><button class='btn waves-effect light-blue darken-4' href='#!'>Detalhes</button></td>
 												</tr>
 
 											";
@@ -103,7 +102,29 @@
 									?>
 								</tbody>
 							</table>
-						</div>
+						</div><!--row-->
+						<div clss="row">
+							<h5 class="center">Endereço</h5>
+							<table>
+								<thead>
+									<tr>
+										<th>Rua</th>
+										<th>Numero</th>
+										<th>Bairro</th>
+										<th>Cidade</th>
+										<th>UF</th>
+										<th>Detalhes</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php
+
+
+
+									?>
+								</tbody>
+							</table>
+						</div><!--row-->
 					</form>
 				</div>
 			</div>

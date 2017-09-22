@@ -30,7 +30,7 @@
         <div class="col s12 m12 l12">
           <div class="card">
             <div class="card-image">
-              <img src="../imagens/home.jpeg" style="width: 1480px; height: 600px;">
+              <img src="../imagens/home1480x600.jpg">
               <span class="card-title black-text" style="font-size: 30px;"><b>O site ALERT WEB</b></span>
             </div>
             <div class="card-content">
