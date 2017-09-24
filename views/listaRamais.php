@@ -13,6 +13,7 @@
 	while($tbl = mysqli_fetch_array($resultRamais)){//enquanto houver registros na tabela ele irá armazenar nas seguintes variaveis
 
 		//tabela ramal
+		$idRamal[] = $tbl['idRamal'];//armazena o id do ramal
 		$nomeRamal[] = $tbl['nomeRamal'];//armazena o nome do ramal
 		$numeroRamal[] = $tbl['numeroRamal'];//armazena o numero do ramal
 
@@ -55,28 +56,56 @@
 						<th>Setor</th><!--label setor da tabela-->
 						<th>Funcionário</th><!--label funcionario da tabela-->
 						<th>Ramal</th><!--label ramal da tabela-->
+						<?php
+							if($_SESSION['acesso'] == "Administrador"){
+								echo "<th>Deletar</th>";
+							}
+						?>
 					</tr><!--fim da estrutura do cabeçalho-->
 				</thead><!--fim do cabeçalho da tabela-->
 				<tbody><!--inicio do corpo da tabela-->
 				<?php
 
-					for($indice = 0; $indice < $total; $indice++){//verifica enquanto o indice for menor que a quantidade de registros encontrados na tabela ele ira alimentando a tabela
+					if($_SESSION['acesso'] == "Administrador"){
 
-					//inicio da tabela
-					echo "
+						for($indice = 0; $indice < $total; $indice++){//verifica enquanto o indice for menor que a quantidade de registros encontrados na tabela ele ira alimentando a tabela
 
-								<tr>
-									<td>$setor[$indice]</td>
-									<td>$nomeRamal[$indice]</td>
-									<td>$numeroRamal[$indice]</td>
-								</tr>
+							//inicio da tabela
+							echo "
 
-					";
-					//fim da tabela
+										<tr>
+											<td>$setor[$indice]</td>
+											<td>$nomeRamal[$indice]</td>
+											<td>$numeroRamal[$indice]</td>
+											<td><a class='btn waves-effect light-blue darken-4' href='excluir/excluirRamais.php?id=$idRamal[$indice]'>Deletar</a></td>
+										</tr>
 
-				}//fim do for
+							";
+							//fim da tabela
 
-			?>
+						}//fim do for
+
+					}else{
+
+						for($indice = 0; $indice < $total; $indice++){//verifica enquanto o indice for menor que a quantidade de registros encontrados na tabela ele ira alimentando a tabela
+
+							//inicio da tabela
+							echo "
+
+										<tr>
+											<td>$setor[$indice]</td>
+											<td>$nomeRamal[$indice]</td>
+											<td>$numeroRamal[$indice]</td>
+										</tr>
+
+							";
+							//fim da tabela
+
+						}//fim do for
+
+					}
+
+				?>
 				</tbody><!--fim do corpo da tabela-->
 			</table>
 		</ul>

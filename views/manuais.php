@@ -12,6 +12,7 @@
 
 	while($tbl = mysqli_fetch_array($resultManuais)){//enquanto houver registros ele ira armazenar os valores nas variaveis
 
+		$idManual[] = $tbl['idManual'];//armazena o id do manual
 		$funcionario[] = $tbl['nomeFuncionario'];//armazena o nome do funcionario
 		$titulo[] = $tbl['tituloManual'];//armazena o titulo do manual
 		$descricao[] = $tbl['descricaoManual'];//armazena a descrição do manual
@@ -51,7 +52,32 @@
 		<ul class="collapsible popout" data-collapsible="accordion">
 			<?php
 
-				for($indice = 0; $indice < $total; $indice++){//faz um repetição enquanto o indice for menor que a quantidade de registros encontrados
+				if($_SESSION['acesso'] == "Administrador"){
+
+					for($indice = 0; $indice < $total; $indice++){//faz um repetição enquanto o indice for menor que a quantidade de registros encontrados
+
+						//monta o collapsible
+						echo "
+
+							<li>
+								<div class='collapsible-header'><i class='material-icons'>label</i>$titulo[$indice] $data[$indice]</div>
+								<div class='collapsible-body'><span>
+									Download PDF: <a href='$descricao[$indice]' target='_black'>$descricao[$indice]</a><br><br>
+									Data do Manual: $data[$indice]<br><br>
+									Funcionário: $funcionario[$indice]<br><br>
+									Versão do Sistema: $versaoSistema[$indice]<br></br>
+									<a class='btn waves-effect light-blue darken-4' href='excluir/excluirManuais.php?id=$idManual[$indice]'>Deletar</a>
+								</span></div>
+							</li>
+
+						";
+						//fim do collapsible
+
+					}//fim do for
+
+				}else{
+
+					for($indice = 0; $indice < $total; $indice++){//faz um repetição enquanto o indice for menor que a quantidade de registros encontrados
 
 					//monta o collapsible
 					echo "
@@ -70,6 +96,8 @@
 					//fim do collapsible
 
 				}//fim do for
+
+				}
 
 			?>
 		</ul>

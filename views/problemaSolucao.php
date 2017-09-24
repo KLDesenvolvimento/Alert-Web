@@ -12,6 +12,7 @@
 
 	while($tbl = mysqli_fetch_array($resultProblemaSolucao)){//enquanto houver registros ira ser armazenados nas seguintes variaveis
 
+		$idProblemaSolucao[] = $tbl['idProblemaSolucao'];
 		$titulo[] = $tbl['tituloProblemaSolucao'];//armazena o titulo do problema
 		$problema[] = $tbl['problema'];//armazena o problema
 		$solucao[] = $tbl['solucao'];//armazena a solução
@@ -59,7 +60,36 @@
 		<ul class="collapsible popout" data-collapible="accordion">
 			<?php
 
-				for($indice = 0; $indice < $total; $indice++){//faz uma repetição
+				if($_SESSION['acesso'] == "Administrador"){
+
+					for($indice = 0; $indice < $total; $indice++){//faz uma repetição
+
+					$solucao[$indice] = preg_replace("/\//",'<br>',$solucao[$indice]);//verifica se tem "/" na solução, caso haja ele ira fazer a quebra de linha
+
+					//monta o collapsible de problemas e soluções
+					echo "
+
+						<li>
+							<div class='collapsible-header'><i class='material-icons'>label</i>$titulo[$indice]</div>
+							<div class='collapsible-body'><span>
+								Problema: $problema[$indice]<br><br>
+								Solução: $solucao[$indice]<br><br>
+								Funcionário: $funcionario[$indice]<br><br>
+								Data Incusão: $data[$indice]<br></br>
+								<a class='btn waves-effect light-blue darken-4' href='excluir/excluirProblemaSolucao.php?id=$idProblemaSolucao[$indice]'>Deletar</a>
+							</span></div>
+						</li>
+
+					";
+					//fim do collapsible
+
+				}//fim do for
+
+				mysqli_close($link);//fecha a conexao com o banco de dados
+
+				}else{
+
+					for($indice = 0; $indice < $total; $indice++){//faz uma repetição
 
 					$solucao[$indice] = preg_replace("/\//",'<br>',$solucao[$indice]);//verifica se tem "/" na solução, caso haja ele ira fazer a quebra de linha
 
@@ -82,6 +112,8 @@
 				}//fim do for
 
 				mysqli_close($link);//fecha a conexao com o banco de dados
+
+				}
 
 			?>	
 		</ul>

@@ -13,19 +13,19 @@
 	$tipoAcesso = $_POST['acesso'];
 	$senhaMD5 = MD5($senha);
 
-	if(!isset($nomeFuncionario)){
+	if($nomeFuncionario == null){
 		$erro = "Nome do funcionario não pode ser em branco.";
 		echo "<script>alert('$erro'); window.location.href = '../../views/Cadastro/cadFuncionario.php';</script> ";
-	}else if(!isset($usuario)){
+	}else if($usuario == null){
 		$erro = "Usuário não pode ser em branco.";
 		echo "<script>alert('$erro'); window.location.href = '../../views/Cadastro/cadFuncionario.php';</script> ";
-	}else if(isset($senha)){
+	}else if($senha == null){
 		$erro = "Senha não pode ser em branco.";
 		echo "<script>alert('$erro'); window.location.href = '../../views/Cadastro/cadFuncionario.php';</script> ";
-	}else if(!isset($fkSetor)){
+	}else if($fkSetor == null){
 		$erro = "Setor não pode ser em branco.";
 		echo "<script>alert('$erro'); window.location.href = '../../views/Cadastro/cadFuncionario.php';</script> ";
-	}else if(!isset($tipoAcesso)){
+	}else if($tipoAcesso == null){
 		$erro = "Tipo de acesso do funcionário não pode ser em branco.";
 		echo "<script>alert('$erro'); window.location.href = '../../views/Cadastro/cadFuncionario.php';</script> ";
 	}

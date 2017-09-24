@@ -13,6 +13,7 @@
 
 	while($tbl = mysqli_fetch_array($resultComandos)){//enquanto houver linhas irá armazer os valores nas variaveis a seguir
 
+		$idComando[] = $tbl['idComando'];//recebe o id do comando
 		$titulo[] = $tbl['tituloComando'];//recebe o titulo do comando
 		$descricao[] = $tbl['descricaoComando'];//recebe a descrição do comando
 		$funcionario[] = $tbl['nomeFuncionario'];//recebe o nome do funcionario que criou o comando
@@ -53,6 +54,8 @@
 				
 				<?php
 
+				if($_SESSION['acesso'] == "Administrador"){
+
 					for($indice = 0; $indice < $total; $indice++){//faz uma repetição ate o indice ser igual ao numero de resultados encontrados na tabela de comandos
 
 						$data[$indice] = date('d/m/20y', strtotime($dataInclusao[$indice]));//sempre que for encontrado uma data ele fará a conversão de ano/mes/dia para dia/mes/ano
@@ -71,7 +74,7 @@
 									<b>Comando SQL:</b> <br>$descricao[$indice]<br></br>
 									<b>Autor:</b> $funcionario[$indice]<br></br>
 									<b>Data Inclusão:</b> $data[$indice]<br></br>
-									<button class='btn waves-effect light-blue darken-4' href=''>Deletar</button>
+									<a class='btn waves-effect light-blue darken-4' href='excluir/excluirComandos.php?id=$idComando[$indice]'>Deletar</a>
 								</span></div>
 							</li>
 
@@ -79,6 +82,36 @@
 						//fim da tabela
 
 					}//fim do for
+
+				}else{
+
+					for($indice = 0; $indice < $total; $indice++){//faz uma repetição ate o indice ser igual ao numero de resultados encontrados na tabela de comandos
+
+						$data[$indice] = date('d/m/20y', strtotime($dataInclusao[$indice]));//sempre que for encontrado uma data ele fará a conversão de ano/mes/dia para dia/mes/ano
+
+						//$string = "asdasdadadasda / zcnlnzxlvn / zcxzxcxz";
+						$descricao[$indice] = preg_replace("/\//",'<br>',$descricao[$indice]);//sempre que for encontrado uma "/" ele irá fazer a quebra de linha no comando
+						//echo $descricao[$indice];
+
+						//monta a tabela
+						echo "
+
+							<li>
+								<div class='collapsible-header'><i class='material-icons'>label</i>$titulo[$indice]</div>
+								
+								<div class='collapsible-body'><span>
+									<b>Comando SQL:</b> <br>$descricao[$indice]<br></br>
+									<b>Autor:</b> $funcionario[$indice]<br></br>
+									<b>Data Inclusão:</b> $data[$indice]<br></br>
+								</span></div>
+							</li>
+
+						";
+						//fim da tabela
+
+					}//fim do for
+
+				}
 
 				?>
 

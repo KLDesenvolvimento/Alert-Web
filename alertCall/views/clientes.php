@@ -5,7 +5,7 @@
 	$conexaoBD = new conexaoBD();
 	$link = $conexaoBD->conectar();
 
-	$pesquisa = $_GET['pesquisa'];
+	@$pesquisa = $_GET['pesquisa'];
 
 	if($pesquisa == null){
 
