@@ -28,11 +28,14 @@
 				<table class="centered striped col s3 m3 l3" style="border: 1px solid #000"><!--tipo de tabela-->
 					<thead><!--inicio do cabeçalho da tabela-->
 						<?php
+						//============ Faz a busca do primeiro dia do mês e ultimo dia =======================================
 							$data_incio = mktime(0, 0, 0, date('m') , 1 , date('Y')); // pega o primeiro dia do mês e a primeira hora 
 							$data_fim = mktime(23, 59, 59, date('m'), date("t"), date('Y')); //pega o ultimo dia do mês e a ultima hora
 							$primeiroDia =  date('Y-m-d',$data_incio);  // recebe apenas a  primeira data do mês formatada 01-09-2017
 							$ultimoDia =  date('Y-m-d',$data_fim); // recebe apenas a  ultima  data do mês formatada 31-09-2017
 
+
+					//================== lista de Meses para exibir na mensagem do topo===========================================
 							$meses = array(
 							    '01'=>'Janeiro',
 							    '02'=>'Fevereiro',
@@ -46,10 +49,22 @@
 							    '10'=>'Outubro',
 							    '11'=>'Novembro',
 							    '12'=>'Dezembro'
-							);
+							); //fim array
+					//====================================================================
+							
+							// converte as datas alternando a posição 
 
-							//echo $meses[date('m')];
+							 // if(count(explode("/",$primeiroDia)) > 1){
+							 //      $primeiroDia = implode("-",array_reverse(explode("-",$primeiroDia)));
+							 //  }elseif(count(explode("-",$primeiroDia)) > 1){
+							 //       $primeiroDia = implode("-",array_reverse(explode("-",$primeiroDia)));
 
+							 //* }// fim if de conversão de data
+
+							
+
+
+							  // Mensagem do topo do ranking=======================================
 							echo "Periodo de ".$primeiroDia." a  ".date('Y-m-d'). " do mês de ".$meses[date('m')]."." ;
 							echo"<br>";
 						  ?>
@@ -70,7 +85,6 @@
 							$link = $conexaoBD->conectar();//armazena o retorno da conexao com o banco de dados na variavel
 							
 								
-
 							
 
 							 $selectTotalFunc = "SELECT COUNT(idFuncionario) FROM funcionario";// select  para saber o total de registros	
@@ -80,9 +94,44 @@
 							// echo "resultado selectTotalFunc = ".$totalFunc; // echo para teste saida: resultado selectTotalFunc = 5
 							// echo"<br>";
 
-							$vetorId = array(); // recebe a lista de id de funcionairo
-							$vetorNome = array( );// recebe a lista com os nomes de funcionarios
+
+							 // vetores da tabela de ranking =============================
+
+							$vetorId = array(); // recebe a lista de id de funcionairo							
+							$vetorNome = array( );// recebe a lista com os nomes de funcionarios							
 							$vetorPontos = array( );// recebe a lista da soma de pontos por id
+							
+
+
+			//======================================================== Vetores da tabela de pontuação =========================================================================
+							$vetorIdTabela = array(); // recebe os id da tabelas em ordenados e sem indice 0
+							$vetorNomeTabela = array(); //recebe os nomes da tabela sem o indice 0
+
+							$vetorSegAmarelo = array();
+							$vetorSegAzul = array();
+							$vetorSegVerde = array();
+							$vetorSegVermelho = array();
+
+							$vetorTerAmarelo = array();
+							$vetorTerAzul = array();
+							$vetorTerVerde = array();
+							$vetorTerVermelho = array();
+
+							$vetorQuaAmarelo = array();
+							$vetorQuaAzul = array();
+							$vetorQuaVerde =  array();
+							$vetorQuaVermelho = array();
+
+							$vetorQuiAmarelo = array();
+							$vetorQuiAzul = array();
+							$vetorQuiVerde =  array();
+							$vetorQuiVermelho = array();
+
+							$vetorSexAmarelo = array();
+							$vetorSexAzul = array();
+							$vetorSexVerde =  array();
+							$vetorSexVermelho = array();
+			//============================================================ fim fetor da tabela semanal ==========================================================================
 							
 							$sql = "SELECT idFuncionario FROM funcionario ORDER BY idFuncionario";// consulta os numero de id da tabela funcionario
 							$result = mysqli_query($link,$sql); // execulta a query e salva na variavel
@@ -96,32 +145,30 @@
 									// echo"<br>";
 									$posicao = $posicao +1;
 								}
-
-								$posicao = 0;
-							for ($i=1; $i <$totalFunc ; $i++) { 
-								// echo"<br>";
-								//echo $vet[$i]; // printa para t
-							
-								 $selectPontos = "SELECT SUM(pontos) FROM pontuacoes WHERE fkFuncionario=$vetorId[$i] AND dataPontos BETWEEN $primeiroDia and CURDATE() ";// faz a soma de todos os pontos de acordo com o ID
-								 $resultTotalPontos = mysqli_query($link,$selectPontos); 
-								 $tblPontos = mysqli_fetch_array($resultTotalPontos); //monta um array com o resultado da query
-								 $totalPontos = $tblPontos[0]; //passa o valor do campo escolhido cada campo é uma numeração
-								 $vetorPontos[$posicao] = $totalPontos; 
-
-
-								 $sqlf = "SELECT * FROM funcionario WHERE idfuncionario=$vetorId[$i] ORDER BY idFuncionario";// consulta os numero de id da tabela funcionario
-								$resultf = mysqli_query($link,$sqlf); // execulta a query e salva na variavel
-							
-									while($tblf = mysqli_fetch_array($resultf)){ //verifica o valor do result montando um array
-
-									$nomef = $tblf['nomeFuncionario']; //atribui 
-									$vetorNome[$posicao] = (string)$nomef; 
+								$posicao = 0;// variavel de controle de posições no vetor
 								
-									}// fm while
+								for ($i=1; $i <$totalFunc ; $i++) { 
+
+									 $selectPontos = "SELECT SUM(pontos) FROM pontuacoes WHERE fkFuncionario=$vetorId[$i] AND dataPontos BETWEEN $primeiroDia and CURDATE() ";// faz a soma de todos os pontos de acordo com o ID
+									 $resultTotalPontos = mysqli_query($link,$selectPontos); 
+									 $tblPontos = mysqli_fetch_array($resultTotalPontos); //monta um array com o resultado da query
+									 $totalPontos = $tblPontos[0]; //passa o valor do campo escolhido cada campo é uma numeração
+									 $vetorPontos[$posicao] = $totalPontos; 
 									
-									$posicao = $posicao +1;
+
+									 $sqlf = "SELECT * FROM funcionario WHERE idfuncionario=$vetorId[$i] ORDER BY idFuncionario";// consulta os numero de id da tabela funcionario
+									$resultf = mysqli_query($link,$sqlf); // execulta a query e salva na variavel
+								
+										while($tblf = mysqli_fetch_array($resultf)){ //verifica o valor do result montando um array
+
+										$nomef = $tblf['nomeFuncionario']; //atribui 
+										$vetorNome[$posicao] = (string)$nomef; 
+									
+										}// fm while
+										
+										$posicao = $posicao +1;
 															
-							}// fim for	
+								}// fim for	
 
 							arsort($vetorPontos); // ordena o vetorPontução por ordem decrecente
 							$posicao = 1;
@@ -137,13 +184,17 @@
 									
 
 									$posicao = $posicao+1;
-								echo "<br>"; // quebra linha
+								echo "<br>"; // quebra
 							}
 						
 							?>
 
 					</tbody>				
 				</table>	
+
+
+
+
 				<table class="centered striped "><!--tipo de tabela-->
 					<thead><!--inicio do cabeçalho da tabela-->
 						<?php 	
@@ -190,40 +241,39 @@
 							}
 
 
-								echo"<tr><!--estrutura do cabeçalho-->
-							        	          <th>Funcionario</th><!--label posição do funcionario-->";
+								echo"	<tr><!--estrutura do cabeçalho-->
+							        	        		  <th>Funcionario</th><!--label posição do funcionario-->";
 
-								echo"<th>Segunda"."<br>".$periodoDias[1]."</th>";
-								echo"<th>Terça"."<br>".$periodoDias[2]."</th>";
-								echo"<th>Quarta"."<br>".$periodoDias[3]."</th>";
-								echo"<th>Quinta"."<br>".$periodoDias[4]."</th>";
-								echo"<th>Sexta"."<br>".$periodoDias[5]."</th>
+											echo"<th>Segunda"."<br>".$periodoDias[1]."</th>";// mota os dias da semana com a data atual do servidor
+											echo"<th>Terça"."<br>".$periodoDias[2]."</th>";// mota os dias da semana com a data atual do servidor
+											echo"<th>Quarta"."<br>".$periodoDias[3]."</th>";// mota os dias da semana com a data atual do servidor
+											echo"<th>Quinta"."<br>".$periodoDias[4]."</th>";// mota os dias da semana com a data atual do servidor
+											echo"<th>Sexta"."<br>".$periodoDias[5]."</th>
 									</tr>
 						
 
-					</thead>
-					
-					<tbody>
+					</thead>					
+					<tbody> 
 						";
-	
-
-
-
-
-						
-						//function get_inicio_fim_semana($numero_semana = "", $ano = ""){
-						/* soma o número de semanas em cima do início do ano 01/01/2013 */
-						
-						
-						  echo "<br>";
-						  echo "<br>";
 
 						  function tabelaPontuacao($link,$id,$data,$indicador){
-						  
-						 $select = "SELECT COUNT(fkIndicador) FROM pontuacoes WHERE fkFuncionario='2' AND dataPontos='2017-09-11' and fkIndicador='3'";
+						  	 if(count(explode("/",$data)) > 1){
+						      $data = implode("-",array_reverse(explode("-",$data)));
+						    }elseif(count(explode("-",$data)) > 1){
+						       $data = implode("-",array_reverse(explode("-",$data)));
+						    }
+							 
+							
+
+
+
+						 $select = "SELECT COUNT(fkIndicador) FROM pontuacoes WHERE fkFuncionario=$id AND dataPontos='$data' and fkIndicador=$indicador";
+						 	// echo $select;
+						 	//  echo "<br>";
 						 $result = mysqli_query($link,$select);
 						 $tbl=mysqli_fetch_array($result);
 
+						// print_r($tbl);
 						 $valorIndicador = $tbl[0];
 
 						
@@ -231,35 +281,99 @@
 						}	
 
 
-							
+						$posicao = 1; // variavel de controle de indice
+						foreach ($vetorNome as  $value) {// varre o vetor e ordenado e retorna o valor
+							$vetorNomeTabela[$posicao] = $value; // vetor recebe o valor do vetor da ordem que encontrar
+							$posicao = $posicao +1; // adiciona +1 na posição do vetor 
+						}// fim foreach
 
+							$posicao = 1; // variavel de controle para a linha
+							$totalposicao = 2;
+							// for para consulta dos dados da semana
+							//for ($coluna=1; $coluna <$totalFunc ; $coluna++) {  // controla a quantidade de consultas
 
+								for ($linha=1; $linha <$totalposicao; $linha++) { 	// controla a consulta por linha na tabela 
+																	
 
-							for ($indice=0; $indice <$totalFunc  ; $indice++) { 
-							
-							$indVerde = tabelaPontuacao($link,$vetorId[$indice],$periodoDias[1],3);
-							//echo $indVerde;
-							
-							
-						}	
-						asort($vetorNome);
-							foreach ($vetorNome as $key => $value) {
-								echo"
-								<tr>
-									<td>".$vetorNome[$key]."</td>
-									<td>Verde ".$indVerde."</td>
-								</tr>
+									$vetorSegAmarelo[$linha] = tabelaPontuacao($link,$vetorId[$linha],$periodoDias[1],1); //  faz consulta no banco  usando por controle o dia da semana e o
+									$vetorTerAmarelo[$linha] =  tabelaPontuacao($link,$vetorId[$linha],$periodoDias[2],1);
+									$vetorQuaAmarelo[$linha] =  tabelaPontuacao($link,$vetorId[$linha],$periodoDias[3],1);
+									$vetorQuiAmarelo[$linha] =  tabelaPontuacao($link,$vetorId[$linha],$periodoDias[4],1);
+									$vetorSexAmarelo[$linha] =  tabelaPontuacao($link,$vetorId[$linha],$periodoDias[5],1);
+
+									$vetorSegAzul[$linha] = tabelaPontuacao($link,$vetorId[$linha],$periodoDias[1],2); // salva no vetor o resultado da Função pegando um vetor com a consulta de cada dia da semana
+									$vetorTerAzul[$linha] =  tabelaPontuacao($link,$vetorId[$linha],$periodoDias[2],2);
+									$vetorQuaAzul[$linha] =  tabelaPontuacao($link,$vetorId[$linha],$periodoDias[3],2);
+									$vetorQuiAzul[$linha] =  tabelaPontuacao($link,$vetorId[$linha],$periodoDias[4],2);
+									$vetorSexAzul[$linha] =  tabelaPontuacao($link,$vetorId[$linha],$periodoDias[5],2);
 									
-							";
-														//for
+									$vetorSegVerde[$linha] = tabelaPontuacao($link,$vetorId[$linha],$periodoDias[1],3); // salva no vetor o resultado da Função pegando um vetor com a consulta de cada dia da semana
+									$vetorTerVerde[$linha] =  tabelaPontuacao($link,$vetorId[$linha],$periodoDias[2],3);
+									$vetorQuaVerde[$linha] =  tabelaPontuacao($link,$vetorId[$linha],$periodoDias[3],3);
+									$vetorQuiVerde[$linha] =  tabelaPontuacao($link,$vetorId[$linha],$periodoDias[4],3);
+									$vetorSexVerde[$linha] =  tabelaPontuacao($link,$vetorId[$linha],$periodoDias[5],3);
+									
+									$vetorSegVermelho[$linha] = tabelaPontuacao($link,$vetorId[$linha],$periodoDias[1],4); // salva no vetor o resultado da Função pegando um vetor com a consulta de cada dia da semana
+									$vetorTerVermelho[$linha] =  tabelaPontuacao($link,$vetorId[$linha],$periodoDias[2],4);
+									$vetorQuaVermelho[$linha] =  tabelaPontuacao($link,$vetorId[$linha],$periodoDias[3],4);
+									$vetorQuiVermelho[$linha] =  tabelaPontuacao($link,$vetorId[$linha],$periodoDias[4],4);
+									$vetorSexVermelho[$linha] =  tabelaPontuacao($link,$vetorId[$linha],$periodoDias[5],4);
+									
+																	
+									if ($posicao <$totalFunc) {
+										$posicao = $posicao+1;
+									}			
+									 if ($totalposicao <$totalFunc ) {
+									 $totalposicao = $totalposicao +1;
+									} // fim if
+								} // fim for
+								
+								
+								for ($coluna=1; $coluna <$totalFunc ; $coluna++) { 
+							
+								echo"
+									<tr>
+									<td>".$vetorNomeTabela[$coluna]."</td>
 
-							}
-						echo "<tr><td>Verde".$indVerde."</td></tr>";
+										<td><font color = #FFD700><b>"."Amarelo = </font>".$vetorSegAmarelo[$coluna]."</br>"."<font color = #0000FF>"." Azul = "."</font> ".$vetorSegAzul[$coluna]. "</br>"."<font color = #008000> Verde = </font>".$vetorSegVerde[$coluna]."</br>"."<font color = #FF0000> Vermelho = </font> ".$vetorSegVermelho[$coluna]."<br>"."</td>
+
+										<td><font color = #FFD700><b>"."Amarelo = </font>".$vetorTerAmarelo[$coluna]."</br>"."<font color = #0000FF>"." Azul = "."</font> ".$vetorTerAzul[$coluna]. "</br>"."<font color = #008000> Verde = </font>".$vetorTerVerde[$coluna]."</br>"."<font color = #FF0000> Vermelho = </font> ".$vetorTerVermelho[$coluna]."<br>"."</td>
+
+										<td><font color = #FFD700><b>"."Amarelo = </font>".$vetorQuaAmarelo[$coluna]."</br>"."<font color = #0000FF>"." Azul = "."</font> ".$vetorQuaAzul[$coluna]. "</br>"."<font color = #008000> Verde = </font>".$vetorQuaVerde[$coluna]."</br>"."<font color = #FF0000> Vermelho = </font> ".$vetorQuaVermelho[$coluna]."<br>"."</td>
+
+										<td><font color = #FFD700><b>"."Amarelo = </font>".$vetorQuiAmarelo[$coluna]."</br>"."<font color = #0000FF>"." Azul = "."</font> ".$vetorQuiAzul[$coluna]. "</br>"."<font color = #008000> Verde = </font>".$vetorQuiVerde[$coluna]."</br>"."<font color = #FF0000> Vermelho = </font> ".$vetorQuiVermelho[$coluna]."<br>"."</td>
+
+										<td><font color = #FFD700><b>"."Amarelo = </font>".$vetorSexAmarelo[$coluna]."</br>"."<font color = #0000FF>"." Azul = "."</font> ".$vetorSexAzul[$coluna]. "</br>"."<font color = #008000> Verde = </font>".$vetorSexVerde[$coluna]."</br>"."<font color = #FF0000> Vermelho = </font> ".$vetorSexVermelho[$coluna]."<br>"."</td>
+									</tr>";		
+								
+							}// fim for
+					
 							
 						 ?>
 						
 					</tbody>
 				</table>
+
+				<table class="centered striped "><!--tipo de tabela-->
+					<thead><!--inicio do cabeçalho da tabela-->
+			'			<?php
+							echo "
+							<tr><!--estrutura do cabeçalho-->
+							
+								<th>Funcionário</th><!--label funcionario do Funcionario-->
+								<th>Semana 1</th><!--label posição do funcionario-->
+								<th>Semana 2</th><!--label Total de Pontos do Funcionario-->
+								<th>Semana 3</th><!--label posição do funcionario-->
+								<th>Semana 4</th><!--label Total de Pontos do Funcionario-->
+								<th>Semana 5</th><!--label posição do funcionario-->
+								<th>Total Pontuação</th><!--label Total de Pontos do Funcionario-->
+							</tr>
+							";
+						?>
+					</thead>					
+					<tbody> 
+					</tbody>
+				</table>		
 		</ul>
 	</div>
 </div>
