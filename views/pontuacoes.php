@@ -14,6 +14,7 @@
 	<script type="text/javascript" src="../js/java.js"></script><!--importa o java-->
 	<link rel="stylesheet" type="text/css" href="../css/materialize.min.css"><!--importa o css do materialize-->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"><!--local onde se localiza os icones utilizados-->
+	<link rel="shortcut icon" href="../imagens/icone.ico" type="image/x-icon" />
 </head>
 <body>
 
@@ -23,11 +24,10 @@
 	?>
 </div>	
 <div class="row">
-	<div class="card-panel">
-		<ul class="collapsible popout" data-collapsible="accordion">
-				<table class="centered striped col s3 m3 l3" style="border: 1px solid #000"><!--tipo de tabela-->
-					<thead><!--inicio do cabeçalho da tabela-->
-						<?php
+	<div class="col s12 m12 l12">
+		<div class="card-panel">
+			<div class="row">
+				<?php
 						//============ Faz a busca do primeiro dia do mês e ultimo dia =======================================
 							$data_incio = mktime(0, 0, 0, date('m') , 1 , date('Y')); // pega o primeiro dia do mês e a primeira hora 
 							$data_fim = mktime(23, 59, 59, date('m'), date("t"), date('Y')); //pega o ultimo dia do mês e a ultima hora
@@ -65,10 +65,19 @@
 
 
 							  // Mensagem do topo do ranking=======================================
-							echo "Periodo de ".$primeiroDia." a  ".date('Y-m-d'). " do mês de ".$meses[date('m')]."." ;
-							echo"<br>";
+							// echo "<h4 class='center'>Ranking de Pontuações</h4>";
+							// echo "<h6 class='center'>Periodo de ".$primeiroDia." a  ".date('Y-m-d'). " do mês de ".$meses[date('m')].".</h6>" ;
 						  ?>
 						
+						<h4 class='center'>Ranking de Pontuações</h4>
+						<?php
+						echo "<h6 class='center'>Periodo de ".date('d/m/20y', strtotime($primeiroDia))." a  ".date('d/m/20y'). " do mês de ".$meses[date('m')].".</h6>";
+						?>
+
+				<br></br>
+				<h5 class="center">Ranking Geral do Mês</h5>
+				<table class="centered striped col m4 push-m4" style="border: 1px solid #bdbdbd  "><!--tipo de tabela-->
+					<thead><!--inicio do cabeçalho da tabela-->
 						<tr><!--estrutura do cabeçalho-->
 							<th>Posição</th><!--label posição do funcionario-->
 							<th>Funcionário</th><!--label funcionario do Funcionario-->
@@ -184,18 +193,17 @@
 									
 
 									$posicao = $posicao+1;
-								echo "<br>"; // quebra
 							}
 						
 							?>
 
 					</tbody>				
 				</table>	
-
-
-
-
-				<table class="centered striped "><!--tipo de tabela-->
+			</div><!--row-->
+			<div class="row">
+				<br></br>
+				<h5 class="center">Pontuação da Semana Atual</h5>
+				<table class="centered striped col s12 m12 l12" style="border: 1px solid #bdbdbd  "><!--tipo de tabela-->
 					<thead><!--inicio do cabeçalho da tabela-->
 						<?php 	
 							Function forma_semana($numeroSemana,$ano){
@@ -353,8 +361,11 @@
 						
 					</tbody>
 				</table>
-
-				<table class="centered striped "><!--tipo de tabela-->
+			</div><!--row-->
+			<div class="row">
+				<br></br>
+				<h5 class="center">Ranking das Semanas do Mês</h5>
+				<table class="centered striped " style="border: 1px solid #bdbdbd  "><!--tipo de tabela-->
 					<thead><!--inicio do cabeçalho da tabela-->
 			'			<?php
 							echo "
@@ -373,10 +384,11 @@
 					</thead>					
 					<tbody> 
 					</tbody>
-				</table>		
-		</ul>
-	</div>
-</div>
+				</table>	
+			</div><!--row-->
+	</div><!--card-panel-->
+</div><!--col s12 m12 l12-->
+</div><!--row-->
 
 
 <div>
