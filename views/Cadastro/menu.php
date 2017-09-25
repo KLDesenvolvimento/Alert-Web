@@ -21,6 +21,13 @@
 </ul>
 <!--fim submenu cadastro-->
 
+<!--submenu ferramentas-->
+<ul id="ferramentas" class="dropdown-content">
+	<li><a href="http://www.nfe.fazenda.gov.br/portal/consulta.aspx?tipoConsulta=completa&tipoConteudo=XbSeqxE8pl8=" target="_blank">Consultar NF-e</a></li>
+	<li><a href="http://www.nfe.fazenda.gov.br/portal/disponibilidade.aspx?versao=0.00&tipoConteudo=Skeuqr8PQBY=" target="_blank">Disponibilidade Sefaz</a></li>
+</ul>
+<!--fim do submenu ferramentas-->
+
 <!--menus de consulta-->
 <nav class="light-blue darken-4">
 	<div class="nav-wrapper">
@@ -52,6 +59,9 @@
 				<li><a href="../../alertDesk/views/consTicket.php">Alert Desk</a></li>
 				<li><a href="../../alertCall/views/clientes.php">Alert Call</a></li>
 				<li><a href="http://ponttierp.com/cds" target="_blank">Pontti</a></li>
+			</ul>
+			<ul>
+				<li><a class="dropdown-button" href="#!" data-activates="ferramentas">Ferramentas<i class="material-icons right">arrow_drop_down</i></a></li>
 			</ul>
 			<!--botao de sair para encerrar a session-->
 			<ul class="right hide_on_med_and_down">

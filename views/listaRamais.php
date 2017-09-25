@@ -47,7 +47,9 @@
 </div>
 
 <div class="row">
-	<div class="card-panel col s12 m12 l12">
+	<div class="col s12 m12 l12">
+		<div class="card-panel">
+			<h5 class="center">Lista de Ramais</h5>
 		<ul class="collapsible popout" data-collapsible="accordion">
 
 			<table class="centered striped "><!--tipo de tabela-->
@@ -109,6 +111,7 @@
 				</tbody><!--fim do corpo da tabela-->
 			</table>
 		</ul>
+	</div>
 	</div>
 </div>
 	

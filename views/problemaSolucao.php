@@ -56,67 +56,70 @@
 </div>
 
 <div class="row">
-	<div class="card-panel">
-		<ul class="collapsible popout" data-collapible="accordion">
-			<?php
+	<div class="col s12 m12 l12">
+		<div class="card-panel">
+			<h5 class="center">Consulta de Problemas e Soluções</h5>
+			<ul class="collapsible popout" data-collapible="accordion">
+				<?php
 
-				if($_SESSION['acesso'] == "Administrador"){
+					if($_SESSION['acesso'] == "Administrador"){
 
-					for($indice = 0; $indice < $total; $indice++){//faz uma repetição
+						for($indice = 0; $indice < $total; $indice++){//faz uma repetição
 
-					$solucao[$indice] = preg_replace("/\//",'<br>',$solucao[$indice]);//verifica se tem "/" na solução, caso haja ele ira fazer a quebra de linha
+						$solucao[$indice] = preg_replace("/\//",'<br>',$solucao[$indice]);//verifica se tem "/" na solução, caso haja ele ira fazer a quebra de linha
 
-					//monta o collapsible de problemas e soluções
-					echo "
+						//monta o collapsible de problemas e soluções
+						echo "
 
-						<li>
-							<div class='collapsible-header'><i class='material-icons'>label</i>$titulo[$indice]</div>
-							<div class='collapsible-body'><span>
-								Problema: $problema[$indice]<br><br>
-								Solução: $solucao[$indice]<br><br>
-								Funcionário: $funcionario[$indice]<br><br>
-								Data Incusão: $data[$indice]<br></br>
-								<a class='btn waves-effect light-blue darken-4' href='excluir/excluirProblemaSolucao.php?id=$idProblemaSolucao[$indice]'>Deletar</a>
-							</span></div>
-						</li>
+							<li>
+								<div class='collapsible-header'><i class='material-icons'>label</i>$titulo[$indice]</div>
+								<div class='collapsible-body'><span>
+									Problema: $problema[$indice]<br><br>
+									Solução: $solucao[$indice]<br><br>
+									Funcionário: $funcionario[$indice]<br><br>
+									Data Incusão: $data[$indice]<br></br>
+									<a class='btn waves-effect light-blue darken-4' href='excluir/excluirProblemaSolucao.php?id=$idProblemaSolucao[$indice]'>Deletar</a>
+								</span></div>
+							</li>
 
-					";
-					//fim do collapsible
+						";
+						//fim do collapsible
 
-				}//fim do for
+					}//fim do for
 
-				mysqli_close($link);//fecha a conexao com o banco de dados
+					mysqli_close($link);//fecha a conexao com o banco de dados
 
-				}else{
+					}else{
 
-					for($indice = 0; $indice < $total; $indice++){//faz uma repetição
+						for($indice = 0; $indice < $total; $indice++){//faz uma repetição
 
-					$solucao[$indice] = preg_replace("/\//",'<br>',$solucao[$indice]);//verifica se tem "/" na solução, caso haja ele ira fazer a quebra de linha
+						$solucao[$indice] = preg_replace("/\//",'<br>',$solucao[$indice]);//verifica se tem "/" na solução, caso haja ele ira fazer a quebra de linha
 
-					//monta o collapsible de problemas e soluções
-					echo "
+						//monta o collapsible de problemas e soluções
+						echo "
 
-						<li>
-							<div class='collapsible-header'><i class='material-icons'>label</i>$titulo[$indice]</div>
-							<div class='collapsible-body'><span>
-								Problema: $problema[$indice]<br><br>
-								Solução: $solucao[$indice]<br><br>
-								Funcionário: $funcionario[$indice]<br><br>
-								Data Incusão: $data[$indice]
-							</span></div>
-						</li>
+							<li>
+								<div class='collapsible-header'><i class='material-icons'>label</i>$titulo[$indice]</div>
+								<div class='collapsible-body'><span>
+									Problema: $problema[$indice]<br><br>
+									Solução: $solucao[$indice]<br><br>
+									Funcionário: $funcionario[$indice]<br><br>
+									Data Incusão: $data[$indice]
+								</span></div>
+							</li>
 
-					";
-					//fim do collapsible
+						";
+						//fim do collapsible
 
-				}//fim do for
+					}//fim do for
 
-				mysqli_close($link);//fecha a conexao com o banco de dados
+					mysqli_close($link);//fecha a conexao com o banco de dados
 
-				}
+					}
 
-			?>	
-		</ul>
+				?>	
+			</ul>
+		</div>
 	</div><!--card-panel-->
 </div><!--row-->
 

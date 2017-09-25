@@ -48,13 +48,38 @@
 </div>
 
 <div class="row">
-	<div class="card-panel">
-		<ul class="collapsible popout" data-collapsible="accordion">
-			<?php
+	<div class="col s12 m12 l12">
+		<div class="card-panel">
+		<h5 class="center">Consulta de Manuais</h5>
+			<ul class="collapsible popout" data-collapsible="accordion">
+				<?php
 
-				if($_SESSION['acesso'] == "Administrador"){
+					if($_SESSION['acesso'] == "Administrador"){
 
-					for($indice = 0; $indice < $total; $indice++){//faz um repetição enquanto o indice for menor que a quantidade de registros encontrados
+						for($indice = 0; $indice < $total; $indice++){//faz um repetição enquanto o indice for menor que a quantidade de registros encontrados
+
+							//monta o collapsible
+							echo "
+
+								<li>
+									<div class='collapsible-header'><i class='material-icons'>label</i>$titulo[$indice] $data[$indice]</div>
+									<div class='collapsible-body'><span>
+										Download PDF: <a href='$descricao[$indice]' target='_black'>$descricao[$indice]</a><br><br>
+										Data do Manual: $data[$indice]<br><br>
+										Funcionário: $funcionario[$indice]<br><br>
+										Versão do Sistema: $versaoSistema[$indice]<br></br>
+										<a class='btn waves-effect light-blue darken-4' href='excluir/excluirManuais.php?id=$idManual[$indice]'>Deletar</a>
+									</span></div>
+								</li>
+
+							";
+							//fim do collapsible
+
+						}//fim do for
+
+					}else{
+
+						for($indice = 0; $indice < $total; $indice++){//faz um repetição enquanto o indice for menor que a quantidade de registros encontrados
 
 						//monta o collapsible
 						echo "
@@ -65,8 +90,7 @@
 									Download PDF: <a href='$descricao[$indice]' target='_black'>$descricao[$indice]</a><br><br>
 									Data do Manual: $data[$indice]<br><br>
 									Funcionário: $funcionario[$indice]<br><br>
-									Versão do Sistema: $versaoSistema[$indice]<br></br>
-									<a class='btn waves-effect light-blue darken-4' href='excluir/excluirManuais.php?id=$idManual[$indice]'>Deletar</a>
+									Versão do Sistema: $versaoSistema[$indice]
 								</span></div>
 							</li>
 
@@ -75,32 +99,11 @@
 
 					}//fim do for
 
-				}else{
+					}
 
-					for($indice = 0; $indice < $total; $indice++){//faz um repetição enquanto o indice for menor que a quantidade de registros encontrados
-
-					//monta o collapsible
-					echo "
-
-						<li>
-							<div class='collapsible-header'><i class='material-icons'>label</i>$titulo[$indice] $data[$indice]</div>
-							<div class='collapsible-body'><span>
-								Download PDF: <a href='$descricao[$indice]' target='_black'>$descricao[$indice]</a><br><br>
-								Data do Manual: $data[$indice]<br><br>
-								Funcionário: $funcionario[$indice]<br><br>
-								Versão do Sistema: $versaoSistema[$indice]
-							</span></div>
-						</li>
-
-					";
-					//fim do collapsible
-
-				}//fim do for
-
-				}
-
-			?>
-		</ul>
+				?>
+			</ul>
+		</div>
 	</div>
 </div>
 	
