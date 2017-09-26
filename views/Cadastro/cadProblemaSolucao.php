@@ -90,9 +90,6 @@
 								</select>
 								<label>Funcionário</label>
 							</div>
-							<div class="input-field col s2 m2 l2">
-								<input type="date" name="dataInclusao" id="campoDataInclusao">
-							</div>
 						</div><!--row-->
 						<div class="row">
 							<div class="input-field col s6 m6 l6">
@@ -116,12 +113,6 @@
 		</div><!--card-panel-->
 	</div><!--col s12 m12 l12-->
 </div><!--row-->
-
-<div>
-	<?php
-		require_once "../rodape.php";
-	?>
-</div>
 	
 </body>
 </html>

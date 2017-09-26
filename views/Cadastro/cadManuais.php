@@ -113,11 +113,5 @@
 	</div>
 </div><!--row-->
 
-<div>
-	<?php
-		require_once "../rodape.php";
-	?>
-</div>
-	
 </body>
 </html>

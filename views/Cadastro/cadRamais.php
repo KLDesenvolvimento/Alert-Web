@@ -90,12 +90,6 @@
 		</div>
 	</div><!--col s12 m12 l12-->
 </div><!--row-->
-
-<div>
-	<?php
-		require_once "../rodape.php";
-	?>
-</div>
 	
 </body>
 </html>

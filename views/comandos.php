@@ -7,7 +7,11 @@
 	$conexaoBD = new conexaoBD();//armazena a classe de conexao na variavel
 	$link = $conexaoBD->conectar();//armazena a resposta do retorno da conexao com o banco de dados
 
-	$selectComandos = " SELECT funcionario.*, comandos.* FROM funcionario, comandos WHERE comandos.fkFuncionario = funcionario.idFuncionario ORDER BY tituloComando ASC ";//select de verificação nas tabelas funcionario e comandos	
+	@$pesquisa = $_GET['pesquisa'];
+
+	if($pesquisa == null){
+
+		$selectComandos = " SELECT funcionario.*, comandos.* FROM funcionario, comandos WHERE comandos.fkFuncionario = funcionario.idFuncionario ORDER BY tituloComando ASC ";//select de verificação nas tabelas funcionario e comandos	
 	$resultComandos = mysqli_query($link, $selectComandos);//executa o comando SQL acima
 	$total = mysqli_num_rows($resultComandos);//verifica se existe linhas na consulta acima
 
@@ -20,6 +24,24 @@
 		$dataInclusao[] = $tbl['dataInclusao'];//recebe a data de inclusao do comando no banco de dados
 
 	}//fim do while
+
+	}else{
+
+		$selectComandos = " SELECT funcionario.*, comandos.* FROM funcionario, comandos WHERE comandos.fkFuncionario = funcionario.idFuncionario AND comandos.tituloComando LIKE '%$pesquisa%' ORDER BY tituloComando ASC ";//select de verificação nas tabelas funcionario e comandos	
+	$resultComandos = mysqli_query($link, $selectComandos);//executa o comando SQL acima
+	$total = mysqli_num_rows($resultComandos);//verifica se existe linhas na consulta acima
+
+	while($tbl = mysqli_fetch_array($resultComandos)){//enquanto houver linhas irá armazer os valores nas variaveis a seguir
+
+		$idComando[] = $tbl['idComando'];//recebe o id do comando
+		$titulo[] = $tbl['tituloComando'];//recebe o titulo do comando
+		$descricao[] = $tbl['descricaoComando'];//recebe a descrição do comando
+		$funcionario[] = $tbl['nomeFuncionario'];//recebe o nome do funcionario que criou o comando
+		$dataInclusao[] = $tbl['dataInclusao'];//recebe a data de inclusao do comando no banco de dados
+
+	}//fim do while
+
+	}
 
 	mysqli_close($link);//fecha a conexao com o banco de dados
 
@@ -50,6 +72,14 @@
 	<div class="col s12 m12 l12">
 		<div class="card-panel">
 			<h5 class="center">Consulta de Comandos</h5>
+			<div class="row">
+				<form class=" col s12 m12 l12" method="POST" action="pesquisa/pesquisaComando.php">
+				<div class="input-field col s3 m3 l3">
+					<input type="search" name="pesquisaComando">
+					<label>Pesquisar Comando</label>
+				</div>
+				<button class="btn waves-effect light-blue darken-4" style="margin-top: 20px;">Pesquisar</button>
+			</div>
 			<ul class="collapsible popout" data-collapsible="accordion">
 				
 				<?php
@@ -74,7 +104,8 @@
 									<b>Comando SQL:</b> <br>$descricao[$indice]<br></br>
 									<b>Autor:</b> $funcionario[$indice]<br></br>
 									<b>Data Inclusão:</b> $data[$indice]<br></br>
-									<a class='btn waves-effect light-blue darken-4' href='excluir/excluirComandos.php?id=$idComando[$indice]'>Deletar</a>
+									<a class='btn waves-effect light-blue darken-4' href='excluir/excluirComandos.php?id=$idComando[$indice]'>Deletar</a><br></br>
+									<a class='btn waves-effect light-blue darken-4' href='atualizar/atualizarComando.php?id=$idComando[$indice]'>Alterar</a>
 								</span></div>
 							</li>
 
@@ -116,8 +147,9 @@
 				?>
 
 			</ul>
-		</div>
-	</div>
+		</form>
+		</div><!--row-->
+	</div><!--card-panel-->
 </div><!--row-->
 
 </body>

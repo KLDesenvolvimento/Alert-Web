@@ -6,30 +6,63 @@
 	$conexaoBD = new conexaoBD();//armazena a classe na variavel
 	$link = $conexaoBD->conectar();//armazena o retorno da tentativa de conexao com o banco de dados
 
-	$selectProblemaSolucao = " SELECT funcionario.*, problemaSolucao.*, categoria.* FROM problemaSolucao, funcionario, categoria WHERE problemaSolucao.fkFuncionario = funcionario.idFuncionario and problemaSolucao.fkCategoria = categoria.idCategoria ORDER BY problemaSolucao.tituloProblemaSolucao ASC ";//comando SQL de consulta nas tabelas funcionario, problemaSolucao e categoria
-	$resultProblemaSolucao = mysqli_query($link, $selectProblemaSolucao);//executa o comando SQL acima
-	$total = mysqli_num_rows($resultProblemaSolucao);//verifica a quantidade de registros
+	@$pesquisa = $_GET['pesquisa'];
 
-	while($tbl = mysqli_fetch_array($resultProblemaSolucao)){//enquanto houver registros ira ser armazenados nas seguintes variaveis
+	if($pesquisa == null){
 
-		$idProblemaSolucao[] = $tbl['idProblemaSolucao'];
-		$titulo[] = $tbl['tituloProblemaSolucao'];//armazena o titulo do problema
-		$problema[] = $tbl['problema'];//armazena o problema
-		$solucao[] = $tbl['solucao'];//armazena a solução
-		$funcionario[] = $tbl['nomeFuncionario'];//armazena o nome do funcionario que criou a solução para o problema
-		$data[] = $tbl['dataInclusao'];//armazena a data da inclusao
+		$selectProblemaSolucao = " SELECT funcionario.*, problemaSolucao.*, categoria.* FROM problemaSolucao, funcionario, categoria WHERE problemaSolucao.fkFuncionario = funcionario.idFuncionario and problemaSolucao.fkCategoria = categoria.idCategoria ORDER BY problemaSolucao.tituloProblemaSolucao ASC ";//comando SQL de consulta nas tabelas funcionario, problemaSolucao e categoria
+		$resultProblemaSolucao = mysqli_query($link, $selectProblemaSolucao);//executa o comando SQL acima
+		$total = mysqli_num_rows($resultProblemaSolucao);//verifica a quantidade de registros
 
-	}//fim do while
+		while($tbl = mysqli_fetch_array($resultProblemaSolucao)){//enquanto houver registros ira ser armazenados nas seguintes variaveis
 
-	$selectCategoria = " SELECT * FROM categoria ORDER BY nomeCategoria ASC ";//comando SQL de consulta na tabela de categoria
-	$resultCategoria = mysqli_query($link, $selectCategoria);//executa o comando SQL acima
-	$totalCategoria = mysqli_num_rows($resultCategoria);//verifica a quantidade de registros encontrados na tabela
+			$idProblemaSolucao[] = $tbl['idProblemaSolucao'];
+			$titulo[] = $tbl['tituloProblemaSolucao'];//armazena o titulo do problema
+			$problema[] = $tbl['problema'];//armazena o problema
+			$solucao[] = $tbl['solucao'];//armazena a solução
+			$funcionario[] = $tbl['nomeFuncionario'];//armazena o nome do funcionario que criou a solução para o problema
+			$data[] = $tbl['dataInclusao'];//armazena a data da inclusao
 
-	while($tblCategoria = mysqli_fetch_array($resultCategoria)){//enquanto houver registros ira armazenar os valores nas seguintes variaveis
+		}//fim do while
 
-		$categoria[] = $tblCategoria['nomeCategoria'];//armazena a categoria do problema
+		$selectCategoria = " SELECT * FROM categoria ORDER BY nomeCategoria ASC ";//comando SQL de consulta na tabela de categoria
+		$resultCategoria = mysqli_query($link, $selectCategoria);//executa o comando SQL acima
+		$totalCategoria = mysqli_num_rows($resultCategoria);//verifica a quantidade de registros encontrados na tabela
 
-	}//fim do while
+		while($tblCategoria = mysqli_fetch_array($resultCategoria)){//enquanto houver registros ira armazenar os valores nas seguintes variaveis
+
+			$categoria[] = $tblCategoria['nomeCategoria'];//armazena a categoria do problema
+
+		}//fim do while
+
+	}else{
+
+		$selectProblemaSolucao = " SELECT funcionario.*, problemaSolucao.*, categoria.* FROM problemaSolucao, funcionario, categoria WHERE problemaSolucao.fkFuncionario = funcionario.idFuncionario and problemaSolucao.fkCategoria = categoria.idCategoria AND problemaSolucao.tituloProblemaSolucao LIKE '%$pesquisa%' OR problemaSolucao.problema LIKE '%$pesquisa%' OR problemaSolucao.solucao LIKE '%$pesquisa%' ORDER BY problemaSolucao.tituloProblemaSolucao ASC ";//comando SQL de consulta nas tabelas funcionario, problemaSolucao e categoria
+		$resultProblemaSolucao = mysqli_query($link, $selectProblemaSolucao);//executa o comando SQL acima
+		$total = mysqli_num_rows($resultProblemaSolucao);//verifica a quantidade de registros
+
+		while($tbl = mysqli_fetch_array($resultProblemaSolucao)){//enquanto houver registros ira ser armazenados nas seguintes variaveis
+
+			$idProblemaSolucao[] = $tbl['idProblemaSolucao'];
+			$titulo[] = $tbl['tituloProblemaSolucao'];//armazena o titulo do problema
+			$problema[] = $tbl['problema'];//armazena o problema
+			$solucao[] = $tbl['solucao'];//armazena a solução
+			$funcionario[] = $tbl['nomeFuncionario'];//armazena o nome do funcionario que criou a solução para o problema
+			$data[] = $tbl['dataInclusao'];//armazena a data da inclusao
+
+		}//fim do while
+
+		$selectCategoria = " SELECT * FROM categoria ORDER BY nomeCategoria ASC ";//comando SQL de consulta na tabela de categoria
+		$resultCategoria = mysqli_query($link, $selectCategoria);//executa o comando SQL acima
+		$totalCategoria = mysqli_num_rows($resultCategoria);//verifica a quantidade de registros encontrados na tabela
+
+		while($tblCategoria = mysqli_fetch_array($resultCategoria)){//enquanto houver registros ira armazenar os valores nas seguintes variaveis
+
+			$categoria[] = $tblCategoria['nomeCategoria'];//armazena a categoria do problema
+
+		}//fim do while
+
+	}
 
 ?>
 
@@ -58,67 +91,83 @@
 <div class="row">
 	<div class="col s12 m12 l12">
 		<div class="card-panel">
-			<h5 class="center">Consulta de Problemas e Soluções</h5>
-			<ul class="collapsible popout" data-collapible="accordion">
-				<?php
+			<div class="row">
+				<h5 class="center">Consulta de Problemas e Soluções</h5>
+				<form class="col s12 m12 l12" method="POST" action="pesquisa/pesquisaProblemaSolucao.php">
+					<ul class="collapsible popout" data-collapible="accordion">
+						<div class="row">
+							<div class="input-field col s3 m3 l3">
+								<input type="search" name="pesquisaProblemaSolucao">
+								<label>Pesquisar Problema/Solução</label>
+							</div>
+							<button class="btn waves-effect light-blue darken-4" style="margin-top: 20px;">Pesquisar</button>
+						</div>
 
-					if($_SESSION['acesso'] == "Administrador"){
+						<?php
 
-						for($indice = 0; $indice < $total; $indice++){//faz uma repetição
+							if($_SESSION['acesso'] == "Administrador"){
 
-						$solucao[$indice] = preg_replace("/\//",'<br>',$solucao[$indice]);//verifica se tem "/" na solução, caso haja ele ira fazer a quebra de linha
+								for($indice = 0; $indice < $total; $indice++){//faz uma repetição
 
-						//monta o collapsible de problemas e soluções
-						echo "
+								$solucao[$indice] = preg_replace("/\//",'<br>',$solucao[$indice]);//verifica se tem "/" na solução, caso haja ele ira fazer a quebra de linha
 
-							<li>
-								<div class='collapsible-header'><i class='material-icons'>label</i>$titulo[$indice]</div>
-								<div class='collapsible-body'><span>
-									Problema: $problema[$indice]<br><br>
-									Solução: $solucao[$indice]<br><br>
-									Funcionário: $funcionario[$indice]<br><br>
-									Data Incusão: $data[$indice]<br></br>
-									<a class='btn waves-effect light-blue darken-4' href='excluir/excluirProblemaSolucao.php?id=$idProblemaSolucao[$indice]'>Deletar</a>
-								</span></div>
-							</li>
+								$data[$indice] = date('d/m/20y');
 
-						";
-						//fim do collapsible
+								//monta o collapsible de problemas e soluções
+								echo "
 
-					}//fim do for
+									<li>
+										<div class='collapsible-header'><i class='material-icons'>label</i>$titulo[$indice]</div>
+										<div class='collapsible-body'><span>
+											Problema: $problema[$indice]<br><br>
+											Solução: $solucao[$indice]<br><br>
+											Funcionário: $funcionario[$indice]<br><br>
+											Data Incusão: $data[$indice]<br></br>
+											<a class='btn waves-effect light-blue darken-4' href='excluir/excluirProblemaSolucao.php?id=$idProblemaSolucao[$indice]'>Deletar</a>
+										</span></div>
+									</li>
 
-					mysqli_close($link);//fecha a conexao com o banco de dados
+								";
+								//fim do collapsible
 
-					}else{
+							}//fim do for
 
-						for($indice = 0; $indice < $total; $indice++){//faz uma repetição
+							mysqli_close($link);//fecha a conexao com o banco de dados
 
-						$solucao[$indice] = preg_replace("/\//",'<br>',$solucao[$indice]);//verifica se tem "/" na solução, caso haja ele ira fazer a quebra de linha
+							}else{
 
-						//monta o collapsible de problemas e soluções
-						echo "
+								for($indice = 0; $indice < $total; $indice++){//faz uma repetição
 
-							<li>
-								<div class='collapsible-header'><i class='material-icons'>label</i>$titulo[$indice]</div>
-								<div class='collapsible-body'><span>
-									Problema: $problema[$indice]<br><br>
-									Solução: $solucao[$indice]<br><br>
-									Funcionário: $funcionario[$indice]<br><br>
-									Data Incusão: $data[$indice]
-								</span></div>
-							</li>
+								$solucao[$indice] = preg_replace("/\//",'<br>',$solucao[$indice]);//verifica se tem "/" na solução, caso haja ele ira fazer a quebra de linha
 
-						";
-						//fim do collapsible
+								$data[$indice] = date('d/m/20y');
 
-					}//fim do for
+								//monta o collapsible de problemas e soluções
+								echo "
 
-					mysqli_close($link);//fecha a conexao com o banco de dados
+									<li>
+										<div class='collapsible-header'><i class='material-icons'>label</i>$titulo[$indice]</div>
+										<div class='collapsible-body'><span>
+											Problema: $problema[$indice]<br><br>
+											Solução: $solucao[$indice]<br><br>
+											Funcionário: $funcionario[$indice]<br><br>
+											Data Incusão: $data[$indice]
+										</span></div>
+									</li>
 
-					}
+								";
+								//fim do collapsible
 
-				?>	
-			</ul>
+							}//fim do for
+
+							mysqli_close($link);//fecha a conexao com o banco de dados
+
+							}
+
+						?>	
+					</ul>
+				</form>
+			</div>
 		</div>
 	</div><!--card-panel-->
 </div><!--row-->

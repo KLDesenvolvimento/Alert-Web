@@ -12,7 +12,7 @@
 	$problema = $_POST['problema'];
 	$solucao = $_POST['solucao'];
 
-	$data = date('20y-m-d', strtotime($dataInclusao));
+	$data = date('20y-m-d');
 
 	if($categoria == null){
 		$erro = "Categoria não pode ser em branco.";

@@ -16,7 +16,7 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"><!--local onde se encontra os icones utilizados-->
 	<link rel="shortcut icon" href="../imagens/icone.ico" type="image/x-icon" />
 </head>
-<body>
+<body class="grey lighten-2">
 
 <div>
 	<?php

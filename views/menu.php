@@ -2,6 +2,11 @@
 
 <!--submenu de consulta-->
 <ul id="consultar" class="dropdown-content">
+	<?php 
+		if($_SESSION['acesso'] == "Administrador"){
+			echo " <li><a href='funcionarios.php'>Funcionarios</a></li> ";
+		}
+	 ?>
 	<li><a href="comandos.php">Comandos</a></li>
 	<li><a href="manuais.php">Manuais</a></li>
 	<li><a href="listaRamais.php">Ramais</a></li>

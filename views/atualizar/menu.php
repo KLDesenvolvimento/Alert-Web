@@ -17,12 +17,12 @@
 
 <!--submenu de cadastro-->
 <ul id="cadastro" class="dropdown-content">
-	<li><a href="cadFuncionario.php">Funcionário</a></li>
-	<li><a href="cadComando.php">Comandos</a></li>
-	<li><a href="cadManuais.php">Manuais</a></li>
-	<li><a href="cadRamais.php">Ramal</a></li>
-	<li><a href="cadPontuacao.php">Pontuação</a></li>
-	<li><a href="cadProblemaSolucao.php">P/S</a></li>
+	<li><a href="../Cadastro/cadFuncionario.php">Funcionário</a></li>
+	<li><a href="../Cadastro/cadComando.php">Comandos</a></li>
+	<li><a href="../Cadastro/cadManuais.php">Manuais</a></li>
+	<li><a href="../Cadastro/cadRamais.php">Ramal</a></li>
+	<li><a href="../Cadastro/cadPontuacao.php">Pontuação</a></li>
+	<li><a href="../Cadastro/cadProblemaSolucao.php">P/S</a></li>
 </ul>
 <!--fim submenu cadastro-->
 
