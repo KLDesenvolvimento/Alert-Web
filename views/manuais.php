@@ -100,7 +100,8 @@
 											Data do Manual: $data[$indice]<br><br>
 											Funcionário: $funcionario[$indice]<br><br>
 											Versão do Sistema: $versaoSistema[$indice]<br></br>
-											<a class='btn waves-effect light-blue darken-4' href='excluir/excluirManuais.php?id=$idManual[$indice]'>Deletar</a>
+											<a class='btn waves-effect light-blue darken-4' href='excluir/excluirManuais.php?id=$idManual[$indice]'>Deletar</a><br><br>
+											<a class='btn waves-effect light-blue darken-4' href='atualizar/atualizarManuais.php?id=$idManual[$indice]' name='alterar'>Alterar</a>
 										</span></div>
 									</li>
 

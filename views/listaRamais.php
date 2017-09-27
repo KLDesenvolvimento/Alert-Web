@@ -29,7 +29,7 @@
 
 	}else{
 
-		$selectRamais = " SELECT ramais.*, setor.* FROM ramais, setor WHERE ramais.fkSetorRamal = setor.idSetor AND ramais.nomeRamal LIKE '%$pesquisa%' OR ramais.numeroRamal LIKE '%$pesquisa%' OR setor.setor LIKE '%$pesquisa%' ORDER BY setor ASC ";//comando SQL de consulta nas tabelas ramais e setor
+		$selectRamais = " SELECT ramais.*, setor.* FROM ramais, setor WHERE ramais.fkSetorRamal = setor.idSetor AND ramais.nomeRamal LIKE '%$pesquisa%'  ORDER BY setor ASC ";//comando SQL de consulta nas tabelas ramais e setor
 		$resultRamais = mysqli_query($link, $selectRamais);//executa o comando SQL acima
 		$total = mysqli_num_rows($resultRamais);//verifica se tem registros na tabela
 
@@ -95,7 +95,10 @@
 									<th>Ramal</th><!--label ramal da tabela-->
 									<?php
 										if($_SESSION['acesso'] == "Administrador"){
-											echo "<th>Deletar</th>";
+											echo "
+											<th>Deletar</th>
+											<th>Atualizar</th>
+											";
 										}
 									?>
 								</tr><!--fim da estrutura do cabeçalho-->
@@ -115,6 +118,7 @@
 														<td>$nomeRamal[$indice]</td>
 														<td>$numeroRamal[$indice]</td>
 														<td><a class='btn waves-effect light-blue darken-4' href='excluir/excluirRamais.php?id=$idRamal[$indice]'>Deletar</a></td>
+														<td><a class='btn waves-effect light-blue darken-4' href='atualizar/atualizarRamais.php?id=$idRamal[$indice]'>Atualizar</a></td>
 													</tr>
 
 										";

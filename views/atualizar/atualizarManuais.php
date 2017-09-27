@@ -5,11 +5,28 @@
 	$conexaoBD = new conexaoBD();
 	$link = $conexaoBD->conectar();
 
+	$id = $_GET['id'];
+
 	$selectMes = " SELECT * FROM mes ";
 	$resultMes = mysqli_query($link, $selectMes);
 
 	$selectFuncionario = " SELECT * FROM funcionario ORDER BY nomeFuncionario ASC ";
 	$resultFuncionario = mysqli_query($link, $selectFuncionario);
+
+	$selectManuais = " SELECT manuais.*, mes.*, funcionario.* FROM manuais, mes, funcionario WHERE manuais.fkMes = mes.idMes AND manuais.fkFuncionario = funcionario.idFuncionario AND idManual = $id ";
+	$resultManuais = mysqli_query($link, $selectManuais);
+	$total = mysqli_num_rows($resultManuais);
+
+	while($manual = mysqli_fetch_array($selectManuais)){
+
+		$idManual[] = $manual['idManual'];
+		$tituloManual[] = $manual['tituloManual'];
+		$descricaoManual[] = $manual['descricaoManual'];
+		$mes[] = $manual['mes'];
+		$nomeFuncionario[] = $manual['nomeFuncionario'];
+		$versaoSistema[] = $manual['versaoSistema'];
+
+	}
 
 ?>
 
@@ -39,19 +56,26 @@
 			<div class="row">
 				<h5 class="center">Cadastro de Manuais</h5>
 				<div class="row">
-					<form class="col s12 m12 l12" method="POST" action="../../controllers/cadastro/cadManuais.php">
+					<form class="col s12 m12 l12" method="POST" action="../../controllers/atualizar/atualizarManuais.php">
 						<div class="row">
-							<div class="input-field col s3">
-								<input id="campoTituloManual" type="text" name="tituloManual">
-								<label for="campoTituloManual">Titulo</label>
-							</div>
+							<?php
+
+							for ($i=0; $i < $total; $i++) { 
+								echo "
+									<div class='input-field col s3'>
+										<input id='campoTituloManual' type='text' name='tituloManual' value='tituloManual[$i]'>
+										<label for='campoTituloManual'>Titulo</label>
+									</div>
+									";
+							}
+							?>
 							<div class="input-field col s2 m2 l2">
 								<select id="comboMesManual" name="mesManual">
 									<option value="" selected>Selecione</option>
 									<?php
 										while($tblMes = mysqli_fetch_array($resultMes))
 										{
-											echo "<option value='" . $tblMes['idMes'] . "'>" . utf8_encode($tblMes['mes']) . "</option>";
+											echo "<option value='" . $tblMes['idMes'] . "' selected>" . utf8_encode($tblMes['mes']) . "</option>";
 										}
 
 										mysqli_close($link);
@@ -65,7 +89,7 @@
 									<?php
 										while($tblFuncionario = mysqli_fetch_array($resultFuncionario))
 										{
-											echo "<option value='" . $tblFuncionario['idFuncionario'] . "'>" . $tblFuncionario['nomeFuncionario'] . "</option>";
+											echo "<option value='" . $tblFuncionario['idFuncionario'] . "' selected>" . $tblFuncionario['nomeFuncionario'] . "</option>";
 										}
 
 										mysqli_close($link);
