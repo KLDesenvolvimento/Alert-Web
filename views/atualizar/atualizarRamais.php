@@ -49,7 +49,7 @@
 	<div class="col s12 m12 l12">
 		<div class="card-panel">
 			<div class="row">
-				<h5 class="center">Cadastro de Ramal</h5>
+				<h5 class="center">Atualização de Ramal</h5>
 				<div class="row">
 					<form class="" method="POST" action="../../controllers/atualizar/atualizarRamais.php">
 						<div class="row">

@@ -37,7 +37,7 @@
 
 	}else{
 
-		$selectProblemaSolucao = " SELECT funcionario.*, problemaSolucao.*, categoria.* FROM problemaSolucao, funcionario, categoria WHERE problemaSolucao.fkFuncionario = funcionario.idFuncionario and problemaSolucao.fkCategoria = categoria.idCategoria AND problemaSolucao.tituloProblemaSolucao LIKE '%$pesquisa%' OR problemaSolucao.problema LIKE '%$pesquisa%' OR problemaSolucao.solucao LIKE '%$pesquisa%' ORDER BY problemaSolucao.tituloProblemaSolucao ASC ";//comando SQL de consulta nas tabelas funcionario, problemaSolucao e categoria
+		$selectProblemaSolucao = " SELECT funcionario.*, problemaSolucao.*, categoria.* FROM problemaSolucao, funcionario, categoria WHERE problemaSolucao.fkFuncionario = funcionario.idFuncionario and problemaSolucao.fkCategoria = categoria.idCategoria AND problemaSolucao.tituloProblemaSolucao LIKE '%$pesquisa%' ORDER BY problemaSolucao.tituloProblemaSolucao ASC ";//comando SQL de consulta nas tabelas funcionario, problemaSolucao e categoria
 		$resultProblemaSolucao = mysqli_query($link, $selectProblemaSolucao);//executa o comando SQL acima
 		$total = mysqli_num_rows($resultProblemaSolucao);//verifica a quantidade de registros
 
@@ -123,7 +123,8 @@
 											Solução: $solucao[$indice]<br><br>
 											Funcionário: $funcionario[$indice]<br><br>
 											Data Incusão: $data[$indice]<br></br>
-											<a class='btn waves-effect light-blue darken-4' href='excluir/excluirProblemaSolucao.php?id=$idProblemaSolucao[$indice]'>Deletar</a>
+											<a class='btn waves-effect light-blue darken-4' href='excluir/excluirProblemaSolucao.php?id=$idProblemaSolucao[$indice]'>Deletar</a><br><br>
+											<a class='btn waves-effect light-blue darken-4' href='atualizar/atualizarProblemaSolucao.php?id=$idProblemaSolucao[$indice]'>Alterar</a>
 										</span></div>
 									</li>
 

@@ -48,7 +48,7 @@
 	<div class="col s12 m12 l12">
 		<div class="card-panel">
 			<div class="row">
-				<h5 class="center">Cadastro de Comandos</h5>
+				<h5 class="center">Atualização de Comandos</h5>
 				<div class="row">
 					<form class="col s12 m12 l12" method="POST" action="../../controllers/atualizar/atualizarComando.php">
 						<div class="row">
@@ -76,9 +76,6 @@
 									?>
 								</select>
 							</div>
-							<!--<div class="input-field col s2 m2 l2">
-								<input type="date" class="datepicker" name="dataInclusao" id="campoDataInclusao">
-							</div>-->
 						</div><!--row-->
 						<div class="row">
 							<?php

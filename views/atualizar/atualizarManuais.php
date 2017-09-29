@@ -17,7 +17,7 @@
 	$resultManuais = mysqli_query($link, $selectManuais);
 	$total = mysqli_num_rows($resultManuais);
 
-	while($manual = mysqli_fetch_array($selectManuais)){
+	while($manual = mysqli_fetch_array($resultManuais)){
 
 		$idManual[] = $manual['idManual'];
 		$tituloManual[] = $manual['tituloManual'];
@@ -27,7 +27,6 @@
 		$versaoSistema[] = $manual['versaoSistema'];
 
 	}
-
 ?>
 
 <!DOCTYPE html>
@@ -54,7 +53,7 @@
 	<div class="col s12 m12 l12">
 		<div class="card-panel">
 			<div class="row">
-				<h5 class="center">Cadastro de Manuais</h5>
+				<h5 class="center">Atualização de Manuais</h5>
 				<div class="row">
 					<form class="col s12 m12 l12" method="POST" action="../../controllers/atualizar/atualizarManuais.php">
 						<div class="row">
@@ -63,7 +62,7 @@
 							for ($i=0; $i < $total; $i++) { 
 								echo "
 									<div class='input-field col s3'>
-										<input id='campoTituloManual' type='text' name='tituloManual' value='tituloManual[$i]'>
+										<input id='campoTituloManual' type='text' name='tituloManual' value='$tituloManual[$i]'>
 										<label for='campoTituloManual'>Titulo</label>
 									</div>
 									";
@@ -97,20 +96,41 @@
 								</select>
 								<label>Funcionário</label>
 							</div>
-							<div class="input-field col s3 m3 l3">
-								<input id="campoVersaoSistema" type="text" name="versaoSistema" maxlength="50">
-								<label for="campoVersaoSistema">Versão do Sistema</label>
-							</div>
+							<?php
+								for ($i=0; $i < $total; $i++) { 
+								
+									echo "
+										<div class='input-field col s3 m3 l3'>
+											<input id='campoVersaoSistema' type='text' name='versaoSistema' maxlength='50' value='$versaoSistema[$i]'>
+											<label for='campoVersaoSistema'>Versão do Sistema</label>
+										</div>
+									";
+
+								}
+
+							?>
 						</div><!--row-->
 						<div class="row">
-							<div class="input-field col s6">
-								<textarea id="campoDescricaoManual" type="text" name="descricaoManual" data-length="120" maxlength="120" class="materialize-textarea"></textarea>
-								<label for="campoDescricaoManual">Descrição</label>
-							</div>
+							<?php
+							
+							for ($i=0; $i < $total; $i++) { 
+
+								echo "
+									<div class='input-field col s6'>
+										<textarea id='campoDescricaoManual' type='text' name='descricaoManual' data-length='120' maxlength='120' class='materialize-textarea'>$descricaoManual[$i]</textarea>
+										<label for='campoDescricaoManual'>Descrição</label>
+									</div>
+									<div class='input-field col s1'>
+										<input type='hidden' name='idManual' value='$idManual[$i]'>
+									</div>
+								";
+							}
+
+							?>
 						</div><!--row-->
 						<div class="row">
 							<div class="center">
-								<button class="btn waves-effect light-blue darken-4" type="submit" name="cadastrar">Cadastrar</button>
+								<button class="btn waves-effect light-blue darken-4" type="submit" name="atualizar">Atualizar</button>
 								<button class="btn waves-effect light-blue darken-4" type="reset" name="limpar">Limpar</button>
 							</div>
 						</div><!--row-->
