@@ -27,7 +27,7 @@
 
 	}else{
 
-		$selectManuais = " SELECT funcionario.*, manuais.*, mes.* FROM funcionario, manuais, mes WHERE manuais.fkFuncionario = funcionario.idFuncionario AND manuais.fkMes = mes.idMes AND manuais.tituloManual = '$pesquisa' ORDER BY tituloManual ASC ";//comando SQL de consulta nas tabelas funcionario e manuais
+		$selectManuais = " SELECT funcionario.*, manuais.*, mes.* FROM funcionario, manuais, mes WHERE manuais.fkFuncionario = funcionario.idFuncionario AND manuais.fkMes = mes.idMes AND manuais.tituloManual LIKE '%$pesquisa%' ORDER BY tituloManual ASC ";//comando SQL de consulta nas tabelas funcionario e manuais
 	$resultManuais = mysqli_query($link, $selectManuais);//executa o comando SQL acima
 	$total = mysqli_num_rows($resultManuais);//verifica se contem registros encontrados
 
