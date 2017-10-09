@@ -154,8 +154,9 @@
 									// echo"<br>";
 									$posicao = $posicao +1;
 								}
-								$posicao = 0;// variavel de controle de posições no vetor
 								
+
+								$posicao = 0;// variavel de controle de posições no vetor
 								for ($i=1; $i <$totalFunc ; $i++) { 
 
 									 $selectPontos = "SELECT SUM(pontos) FROM pontuacoes WHERE fkFuncionario=$vetorId[$i] AND dataPontos BETWEEN $primeiroDia and CURDATE() ";// faz a soma de todos os pontos de acordo com o ID
@@ -194,7 +195,7 @@
 
 									$posicao = $posicao+1;
 							}
-						
+
 							?>
 
 					</tbody>				
@@ -205,7 +206,13 @@
 				<h5 class="center">Pontuação da Semana Atual</h5>
 				<table class="centered striped col s12 m12 l12" style="border: 1px solid #bdbdbd  "><!--tipo de tabela-->
 					<thead><!--inicio do cabeçalho da tabela-->
-						<?php 	
+						<?php 
+
+
+
+
+							// função para Saber o 1º dia da semana (domingo)
+
 							Function forma_semana($numeroSemana,$ano){
 								$semana_atual = strtotime('+'.$numeroSemana.' weeks', strtotime($ano.'0101') ); 
 
@@ -231,22 +238,27 @@
 								return $primeiro_dia_semana;	
 							}
 
-							$numero_semana = date('W')-1;
-							$periodoDias = array( );
+
+							$periodoDias = array( ); // vetor para armazenar as datas da semana
+
+							$numero_semana = date('W')-1;// pega o numero da semana do ano
+							
 							$hoje = date('z'); // pega  o numero do dia de hj somando do 1º dia do ano ate agora 
 							//echo $hoje;
+
+							
 							$semana = intval($hoje / 7) ; // numero da semana dividido po / da o numero da semana 
 							$ano_atual = date('Y');
 												
 							$proximo_dia_semana = forma_semana($semana,$ano_atual);
 							//echo $proximo_dia_semana;
 							
-							for ($indice=0; $indice <7 ; $indice++) { 
-								$periodoDias[$indice] = $proximo_dia_semana;
+								for ($indice=0; $indice <7 ; $indice++) { 
+									$periodoDias[$indice] = $proximo_dia_semana;
 
-								$proximo_dia_semana= date('d-m-Y', strtotime('+1 days', strtotime($proximo_dia_semana)));
-				
-							}
+									$proximo_dia_semana= date('d-m-Y', strtotime('+1 days', strtotime($proximo_dia_semana)));
+					
+								}
 
 
 								echo"	<tr><!--estrutura do cabeçalho-->
@@ -265,11 +277,12 @@
 						";
 
 						  function tabelaPontuacao($link,$id,$data,$indicador){
+						  	
 						  	 if(count(explode("/",$data)) > 1){
-						      $data = implode("-",array_reverse(explode("-",$data)));
-						    }elseif(count(explode("-",$data)) > 1){
-						       $data = implode("-",array_reverse(explode("-",$data)));
-						    }
+							      $data = implode("-",array_reverse(explode("-",$data)));
+							    }elseif(count(explode("-",$data)) > 1){
+							       $data = implode("-",array_reverse(explode("-",$data)));
+							    }
 							 
 							
 
@@ -334,8 +347,7 @@
 									 if ($totalposicao <$totalFunc ) {
 									 $totalposicao = $totalposicao +1;
 									} // fim if
-								} // fim for
-								
+								} // fim for								
 								
 								for ($coluna=1; $coluna <$totalFunc ; $coluna++) { 
 							
@@ -355,8 +367,6 @@
 									</tr>";		
 								
 							}// fim for
-					
-							
 						 ?>
 						
 					</tbody>
@@ -367,22 +377,330 @@
 				<h5 class="center">Ranking das Semanas do Mês</h5>
 				<table class="centered striped " style="border: 1px solid #bdbdbd  "><!--tipo de tabela-->
 					<thead><!--inicio do cabeçalho da tabela-->
-			'			<?php
+						<?php
+
+							// FUNÇÃO PARA SABER O NUMERO DO MÊS ATUAL
+							function numeroMes($mesAtual){// RECEBE O NOME DO MÊS POR TEXTO EX: SETEMBRO
+								$meses = array(
+								    '01'=>'Janeiro',
+								    '02'=>'Fevereiro',
+								    '03'=>'Março',
+								    '04'=>'Abril',
+								    '05'=>'Maio',
+								    '06'=>'Junho',
+								    '07'=>'Julho',
+								    '08'=>'Agosto',
+								    '09'=>'Setembro',
+								    '10'=>'Outubro',
+								    '11'=>'Novembro',
+								    '12'=>'Dezembro'
+								); //fim array
+							$numMes = array_search($mesAtual, $meses); // FAZ UMA BUSCA NO ARRAY COM O NOME E RETORNA A CHAVE
+
+							return $numMes; // A CHAVE É O NUMERO DO MÊS
+							}
+
+							// ´FUNÇÃO PARA SABER QUANTAS SEMANAS TEM NO MÊS ATUAL
+							function quantidadeSemanasMes($mesAno) // RECEBE POR MEIO DE CONCATENAÇÃO O MÊS E ANO EX: 09/2017
+							{
+							    $data = '01/'.$mesAno; // CONCATENA COM O 1 DIA DO MÊS
+							    $start = \DateTime::createFromFormat('d/m/Y', $data);
+
+							    $end = clone $start;
+							    $end->add(new \DateInterval("P1M"));
+							    $end->sub(new \DateInterval("P1D"));
+
+							    return ceil(($start->format('w') + $end->format('d')) / 7);// RETORNA A QTD DE MESES DO MES EX: 5
+							}
+
+							$numMes = numeroMes($meses[date('m')]); // CHAMA A FUNÇÃO PARA PEGAR O NUMERO DO MÊS
+							$numSem = quantidadeSemanasMes($numMes.'/'.$ano_atual);//CHAMA A FUNÇÃO APRA SABER A QTD DE SEMANAS NO MÊS
+
+
+							$vetorPontosSemana1 = array( );
+							$vetorPontosSemana2 = array( );
+							$vetorPontosSemana3 = array( );
+							$vetorPontosSemana4 = array( );
+							$vetorPontosSemana5 = array( );
+							$vetorPontosSemana6 = array( );
+							$vetorTotalSemana = array();
+
+							$vetorInicioSemana = array(); // vetor para receber o a data incial da semana
+							$vetorFimSemana = array(); // vetor para receber a data final da semana
+
+							$posicao = 0;// variavel de controle de posições no vetor
+
+							 $primeiroDia = inverteData($primeiroDia);
+							
+							 $dataAtual = date('d-m-20y');
+					
+							// Cria uma função que retorna o timestamp de uma data no formato DD/MM/AAAA
+							function geraTimestamp($data) {
+							$partes = explode('-', $data);
+							return mktime(0, 0, 0, $partes[1], $partes[0], $partes[2]);
+							}
+							// Usa a função criada e pega o timestamp das duas datas:
+							$time_inicial = geraTimestamp($primeiroDia);
+							$time_final = geraTimestamp($dataAtual);
+							// Calcula a diferença de segundos entre as duas datas:
+							$diferenca = $time_final - $time_inicial; // 19522800 segundos
+							// Calcula a diferença de dias
+							$dias = (int)floor( $diferenca / (60 * 60 * 24)); // 225 dias
+							// Exibe uma mensagem de resultado:
+							//echo "A diferença entre as datas ".$data_inicial." e ".$data_final." é de <strong>".$dias."</strong> dias";
+
+							// A diferença entre as datas 23/03/2009 e 04/11/2009 é de 225 dias
+							//echo 'hoje '. $hoje;// = date('z'); 
+
+							$numDiaAno =($hoje -$dias) ; 
+
+							$semana1 = intval($numDiaAno / 7) ;
+
+						
+							
+						
+
+								function inverteData($data){
+									 if(count(explode("/",$data)) > 1){
+									      $data = implode("-",array_reverse(explode("-",$data)));
+									    }elseif(count(explode("-",$data)) > 1){
+									       $data = implode("-",array_reverse(explode("-",$data)));
+									    }
+
+									    return $data;
+								}// fim função inverteData
+
+								//==== EXCLUSIVO PARA 1º SEMANA ==================
+								
+
+									
+								
+								$valorChave = array_search($primeiroDia, $periodoDias); // FAZ UMA BUSCA NO ARRAY COM O NOME E RETORNA A CHAVE
+								
+								
+								if ($valorChave == 0) {// se o valor da chave cair no domingo ele coloca para a segunda feira
+									
+									$valorChave = 1;
+								}
+								
+
+								
+
+								$proximo_dia_semana = forma_semana($semana1,$ano_atual); // pega o numero da semana  e soma +1
+
+										
+									for ($posicao=0; $posicao <7 ; $posicao++) { 
+									$periodoDias[$posicao] = $proximo_dia_semana;
+
+									$proximo_dia_semana= date('d-m-Y', strtotime('+1 days', strtotime($proximo_dia_semana)));
+					
+									}// fim for que monta o vetor com as datas da semana
+					
+								$data = $periodoDias[$valorChave]; // recebe a data que esta no vetor no formato 01-01-1111
+								
+								$data = inverteData($data);  //invete posição da data  para inserir no banco 1111-11-11
+								//echo 'valor da data'.$data;
+								
+
+						
+								$vetorInicioSemana[0] = $data; // posição zero recebe o 1º dia do mês
+								
+								
+								if ($valorChave >5) { // caso o 1 dia do mês seja no sabado o ultimo dia da semana fica igual
+									
+									$vetorFimSemana[0] = $data; // recebe a mesma data que o inicio
+								}else{
+									
+								$data = $periodoDias[5]; // recebe a data que esta no sexta feira do vetor
+								$data = inverteData($data); // inverte a posição da data para 1111-11-11
+
+								$vetorFimSemana[0] = $data; // salva no vetor do fim de semana a data da fim de semana
+								}
+
+								// =========== FIM DA 1º SEMANA =========================
+											//
+								//============ SEMANAS DO MEIO=========================
+								
+								for ($indice=1; $indice < $numSem-1 ; $indice++) {  // for para alimentar o vetor com as datas do meio da semana
+
+									$proximo_dia_semana = forma_semana($semana1+$indice,$ano_atual); // pega o numero da semana  e soma +1
+
+										
+									for ($posicao=0; $posicao <7 ; $posicao++) { 
+									$periodoDias[$posicao] = $proximo_dia_semana;
+
+									$proximo_dia_semana= date('d-m-Y', strtotime('+1 days', strtotime($proximo_dia_semana)));
+					
+									}// fim for que monta o vetor com as datas da semana
+
+
+
+									$data =$periodoDias[1];
+									$data = inverteData($data);
+
+									$vetorInicioSemana[$indice] = $data;
+
+									$data =$periodoDias[5];
+									$data = inverteData($data);
+
+									$vetorFimSemana[$indice] = $data;
+
+
+									
+								}// fim for que mota o vetor de intervalos de inicio e final da semana
+
+								// ============FIM MEIOS DA SEMANA =====================
+											//
+								// ============ULTIMA SEMANA DO MES ===========================
+								$ultimoDia = inverteData($ultimoDia);
+								
+								
+								$semana1 = $semana1+$numSem -1;
+									
+
+
+
+
+
+								$proximo_dia_semana = forma_semana($semana1,$ano_atual); // pega o numero da semana 
+
+										
+									for ($posicao=0; $posicao <7 ; $posicao++) { 
+									$periodoDias[$posicao] = $proximo_dia_semana;
+
+									$proximo_dia_semana= date('d-m-Y', strtotime('+1 days', strtotime($proximo_dia_semana)));
+					
+									}// fim for que monta o vetor com as datas da semana									
+
+							
+								$valorChave = array_search($ultimoDia, $periodoDias); // FAZ UMA BUSCA NO ARRAY COM O NOME E RETORNA A CHAVE
+
+						
+								
+								$data = $periodoDias[1];
+								$data = inverteData($data);
+								$vetorInicioSemana[$numSem -1] = $data;
+								
+								$data = $periodoDias[$valorChave];
+								$data = inverteData($data);
+								$vetorFimSemana[$numSem -1] = $data;
+
+
+								
+
+
+								//============FIM ULTIMA SEMANA DO MES ========================
 							echo "
 							<tr><!--estrutura do cabeçalho-->
-							
+								
+								<th>Posição 1</th><!--label posição do funcionario-->
 								<th>Funcionário</th><!--label funcionario do Funcionario-->
-								<th>Semana 1</th><!--label posição do funcionario-->
-								<th>Semana 2</th><!--label Total de Pontos do Funcionario-->
-								<th>Semana 3</th><!--label posição do funcionario-->
-								<th>Semana 4</th><!--label Total de Pontos do Funcionario-->
-								<th>Semana 5</th><!--label posição do funcionario-->
-								<th>Total Pontuação</th><!--label Total de Pontos do Funcionario-->
+								";
+								for ($indice=1; $indice < $numSem+1 ; $indice++) { // cria a qtd de semanas de acordo com a qtd do mes
+									$dataini = $vetorInicioSemana[$indice-1];
+									$dataini = inverteData($dataini);
+									$datafim = $vetorFimSemana[$indice-1];
+									$datafim = inverteData($datafim);
+								
+								echo "<th>Semana ".$indice."<br>".$dataini. " a ".$datafim."</th>"; //label posição do funcionario
+								}
+								
+								echo "<th>Total Pontuação</th><!--label Total de Pontos do Funcionario-->
 							</tr>
-							";
+						
+							";							
 						?>
 					</thead>					
 					<tbody> 
+
+						<?php
+						
+
+
+								 function montaSemana($link,$id,$dataInicio,$dataFinal){
+
+									
+									 $selectPontos = "SELECT SUM(pontos) FROM pontuacoes WHERE fkFuncionario=$id AND dataPontos BETWEEN '$dataInicio' and '$dataFinal' ";// faz a soma de todos os pontos de acordo com o 
+									 $resultTotalPontos = mysqli_query($link,$selectPontos); 
+									 $tblPontos = mysqli_fetch_array($resultTotalPontos); //monta um array com o resultado da query
+									 $totalPontos = $tblPontos[0]; //passa o valor do campo escolhido cada campo é uma numeração
+
+									 return	$totalPontos;
+									
+									}// fim da função
+									
+									$posicao = 1; 
+									 for ($linha=1; $linha < $totalFunc ; $linha++) { 
+										
+										
+										for ($coluna=0; $coluna <1 ; $coluna++) { 
+											  $vetorPontosSemana1[$posicao] =  montaSemana($link,$vetorId[$linha],$vetorInicioSemana[0],$vetorFimSemana[0]);
+											 $vetorPontosSemana2[$posicao] = montaSemana($link,$vetorId[$linha],$vetorInicioSemana[1],$vetorFimSemana[1]);
+											 $vetorPontosSemana3[$posicao] = montaSemana($link,$vetorId[$linha],$vetorInicioSemana[2],$vetorFimSemana[2]);
+											 $vetorPontosSemana4[$posicao] = montaSemana($link,$vetorId[$linha],$vetorInicioSemana[3],$vetorFimSemana[3]);
+											
+											if ($numSem = 5) {
+										
+											 	 $vetorPontosSemana5[$posicao] = montaSemana($link,$vetorId[$linha],$vetorInicioSemana[4],$vetorFimSemana[4]);
+											 }
+											
+											if ($numSem > 5) {
+												 $vetorPontosSemana6[$posicao] = montaSemana($link,$vetorId[$linha],$vetorInicioSemana[5],$vetorFimSemana[5]);
+											}
+											 											 	
+										} // for coluna	
+											
+											 $posicao = $posicao +1;
+										}
+								
+								
+									$posicao = 1;	
+									
+
+
+									for ($indice=1; $indice <$totalFunc ; $indice++) { 
+										$vetorTotalSemana[$indice] = ($vetorPontosSemana1[$indice]+$vetorPontosSemana2[$indice]+$vetorPontosSemana3[$indice]+$vetorPontosSemana4[$indice]);
+										if ($numSem >6) {
+											$vetorTotalSemana[$indice] = ($vetorPontosSemana6[$indice]);
+										}
+									}
+									
+
+								foreach ($vetorPontosSemana1 as $key => $value) {
+									
+								}
+								arsort($vetorTotalSemana);
+							foreach ($vetorTotalSemana  as  $key =>$pontos) {// comando foreach varre o array e exibe o array por elementos buscando a chave e salvando por loop
+												
+								echo 
+									"<tr>
+										<td>$posicao</td> <!-- numeor da posição-->
+										<td> $vetorNomeTabela[$key]</td> <!-- vetor com os nomes do funcionarios-->
+										<td>$vetorPontosSemana1[$key]</td><!-- vartiavel que vem do vetor atravez do foreach-->
+										<td>$vetorPontosSemana2[$key]</td><!-- vartiavel que vem do vetor atravez do foreach-->
+										<td>$vetorPontosSemana3[$key]</td><!-- vartiavel que vem do vetor atravez do foreach-->
+										<td>$vetorPontosSemana4[$key]</td><!-- vartiavel que vem do vetor atravez do foreach-->";
+										if ($numSem = 5) {
+											echo "
+										
+												<td>$vetorPontosSemana5[$key]</td><!-- vartiavel que vem do vetor atravez do foreach-->	";	
+												}
+										if ($numSem > 5) {
+											
+											echo "
+										
+												<td>$vetorPontosSemana6[$key]</td><!-- vartiavel que vem do vetor atravez do foreach-->	";	
+												}	
+
+																		
+								echo 		"<td> $vetorTotalSemana[$key]</td> <!-- vetor com os nomes do funcionarios-->
+									</tr>";
+									
+
+									$posicao = $posicao+1;
+							}
+						?>
+
 					</tbody>
 				</table>	
 			</div><!--row-->
@@ -390,5 +708,12 @@
 </div><!--col s12 m12 l12-->
 </div><!--row-->
 
+
+<div>
+	<?php
+		require_once "rodape.php";//importa o rodape
+	?>
+</div>
+	
 </body>
 </html>
