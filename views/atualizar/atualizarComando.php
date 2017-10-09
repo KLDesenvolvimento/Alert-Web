@@ -75,6 +75,7 @@
 										mysqli_close($link);//fecha a conexao com o banco de dados
 									?>
 								</select>
+								<label>Funcionario</label>
 							</div>
 						</div><!--row-->
 						<div class="row">
