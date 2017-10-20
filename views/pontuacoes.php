@@ -8,7 +8,7 @@
 <html lang="pt-br">
 <head>
 	<meta charset="UTF-8">
-	<title>Web Help</title>
+	<title>Alert Web</title>
 	<script type="text/javascript" src="../js/jquery.js"></script><!--importa o jquery-->
 	<script type="text/javascript" src="../js/materialize.min.js"></script><!--importa o java script do materialize-->
 	<script type="text/javascript" src="../js/java.js"></script><!--importa o java-->
@@ -52,21 +52,7 @@
 							); //fim array
 					//====================================================================
 							
-							// converte as datas alternando a posição 
-
-							 // if(count(explode("/",$primeiroDia)) > 1){
-							 //      $primeiroDia = implode("-",array_reverse(explode("-",$primeiroDia)));
-							 //  }elseif(count(explode("-",$primeiroDia)) > 1){
-							 //       $primeiroDia = implode("-",array_reverse(explode("-",$primeiroDia)));
-
-							 //* }// fim if de conversão de data
-
 							
-
-
-							  // Mensagem do topo do ranking=======================================
-							// echo "<h4 class='center'>Ranking de Pontuações</h4>";
-							// echo "<h6 class='center'>Periodo de ".$primeiroDia." a  ".date('Y-m-d'). " do mês de ".$meses[date('m')].".</h6>" ;
 						  ?>
 						
 						<h4 class='center'>Ranking de Pontuações</h4>
@@ -207,7 +193,10 @@
 				<table class="centered striped col s12 m12 l12" style="border: 1px solid #bdbdbd  "><!--tipo de tabela-->
 					<thead><!--inicio do cabeçalho da tabela-->
 						<?php 
-
+							$vetorTotalndAmarelo = array();
+							$vetorTotalndAzul = array();
+							$vetorTotalndVerde = array();
+							$vetorTotalndVermelho = array();
 
 
 
@@ -247,8 +236,6 @@
 							$ano_atual = date('Y');// pega o ano atual												
 							$proximo_dia_semana = forma_semana($semana,$ano_atual);//// a variavel recebe a data do 1º dia da semana passada nos parametros
 
-							echo "proximo dia semana".$proximo_dia_semana;
-							
 							
 								for ($indice=0; $indice <7 ; $indice++) { 
 									$periodoDias[$indice] = $proximo_dia_semana;
@@ -265,7 +252,8 @@
 											echo"<th>Terça"."<br>".$periodoDias[2]."</th>";// mota os dias da semana com a data atual do servidor
 											echo"<th>Quarta"."<br>".$periodoDias[3]."</th>";// mota os dias da semana com a data atual do servidor
 											echo"<th>Quinta"."<br>".$periodoDias[4]."</th>";// mota os dias da semana com a data atual do servidor
-											echo"<th>Sexta"."<br>".$periodoDias[5]."</th>
+											echo"<th>Sexta"."<br>".$periodoDias[5]."</th>";
+											echo"<th>Total Indicadores</th>
 									</tr>
 						
 
@@ -346,6 +334,19 @@
 									} // fim if
 								} // fim for								
 								
+								for ($indice=1; $indice <$totalFunc ; $indice++) { 
+										$vetorTotalndAmarelo[$indice] = ($vetorSegAmarelo[$indice]+$vetorTerAmarelo[$indice]+$vetorQuaAmarelo[$indice]+$vetorQuiAmarelo[$indice]+$vetorSexAmarelo[$indice]);
+
+										$vetorTotalndAzul[$indice] = ($vetorSegAzul[$indice]+$vetorTerAzul[$indice]+$vetorQuaAzul[$indice]+$vetorQuiAzul[$indice]+$vetorSexAzul[$indice]);
+
+										$vetorTotalndVerde[$indice] = ($vetorSegVerde[$indice]+$vetorTerVerde[$indice]+$vetorQuaVerde[$indice]+$vetorQuiVerde[$indice]+$vetorSexVerde[$indice]);
+
+										$vetorTotalndVermelho[$indice] = ($vetorSegVermelho[$indice]+$vetorTerVermelho[$indice]+$vetorQuaVermelho[$indice]+$vetorQuiVermelho[$indice]+$vetorSexVermelho[$indice]);
+
+
+										
+									}
+
 								for ($coluna=1; $coluna <$totalFunc ; $coluna++) { 
 							
 								echo"
@@ -361,6 +362,8 @@
 										<td><font color = #FFD700><b>"."Amarelo = </font>".$vetorQuiAmarelo[$coluna]."</br>"."<font color = #0000FF>"." Azul = "."</font> ".$vetorQuiAzul[$coluna]. "</br>"."<font color = #008000> Verde = </font>".$vetorQuiVerde[$coluna]."</br>"."<font color = #FF0000> Vermelho = </font> ".$vetorQuiVermelho[$coluna]."<br>"."</td>
 
 										<td><font color = #FFD700><b>"."Amarelo = </font>".$vetorSexAmarelo[$coluna]."</br>"."<font color = #0000FF>"." Azul = "."</font> ".$vetorSexAzul[$coluna]. "</br>"."<font color = #008000> Verde = </font>".$vetorSexVerde[$coluna]."</br>"."<font color = #FF0000> Vermelho = </font> ".$vetorSexVermelho[$coluna]."<br>"."</td>
+										<td><font color = #FFD700><b>"."Amarelo = </font>".$vetorTotalndAmarelo[$coluna]."</br>"."<font color = #0000FF>"." Azul = "."</font> ".$vetorTotalndAzul[$coluna]. "</br>"."<font color = #008000> Verde = </font>".$vetorTotalndVerde[$coluna]."</br>"."<font color = #FF0000> Vermelho = </font> ".$vetorTotalndVermelho[$coluna]."<br>"."</td>
+
 									</tr>";		
 								
 							}// fim for
