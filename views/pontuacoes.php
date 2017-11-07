@@ -82,13 +82,14 @@
 								
 							
 
-							 $selectTotalFunc = "SELECT COUNT(idFuncionario) FROM funcionario";// select  para saber o total de registros	
+							 $selectTotalFunc = "SELECT COUNT(idFuncionario) FROM funcionario  where status='1' and fksetor='2' ";// select  para saber o total de registros	
+							
 							 $resultTotalFunc = mysqli_query($link,$selectTotalFunc); 
 							 $tblFunc = mysqli_fetch_array($resultTotalFunc); //monta um array com o resultado da query
 							 $totalFunc = (int)$tblFunc[0]; //passa o valor do campo escolhido cada campo é uma numeração
 							// echo "resultado selectTotalFunc = ".$totalFunc; // echo para teste saida: resultado selectTotalFunc = 5
 							// echo"<br>";
-
+							 
 
 							 // vetores da tabela de ranking =============================
 
@@ -128,9 +129,11 @@
 							$vetorSexVermelho = array();
 			//============================================================ fim fetor da tabela semanal ==========================================================================
 							
-							$sql = "SELECT idFuncionario FROM funcionario ORDER BY idFuncionario";// consulta os numero de id da tabela funcionario
+							$sql = "SELECT idFuncionario FROM funcionario where status='1' and fksetor='2' ORDER BY idFuncionario";// consulta os numero de id da tabela funcionario
+							
 							$result = mysqli_query($link,$sql); // execulta a query e salva na variavel
-							$posicao = 0;
+
+							$posicao = 1;
 								
 								while($tbl = mysqli_fetch_array($result)){ //verifica o valor do result montando um array
 
@@ -140,12 +143,17 @@
 									// echo"<br>";
 									$posicao = $posicao +1;
 								}
+
+
+								
 								
 
 								$posicao = 0;// variavel de controle de posições no vetor
-								for ($i=1; $i <$totalFunc ; $i++) { 
+								for ($i=1; $i <$totalFunc +1; $i++) { 
 
-									 $selectPontos = "SELECT SUM(pontos) FROM pontuacoes WHERE fkFuncionario=$vetorId[$i] AND dataPontos BETWEEN $primeiroDia and CURDATE() ";// faz a soma de todos os pontos de acordo com o ID
+									 $selectPontos = "SELECT SUM(pontos) FROM pontuacoes WHERE fkFuncionario=$vetorId[$i] AND dataPontos BETWEEN '$primeiroDia' and '$ultimoDia' ";// faz a soma de todos os pontos de acordo com o ID
+									 
+
 									 $resultTotalPontos = mysqli_query($link,$selectPontos); 
 									 $tblPontos = mysqli_fetch_array($resultTotalPontos); //monta um array com o resultado da query
 									 $totalPontos = $tblPontos[0]; //passa o valor do campo escolhido cada campo é uma numeração
@@ -274,8 +282,7 @@
 
 
 						 $select = "SELECT COUNT(fkIndicador) FROM pontuacoes WHERE fkFuncionario=$id AND dataPontos='$data' and fkIndicador=$indicador";
-						 	// echo $select;
-						 	//  echo "<br>";
+						 	 
 						 $result = mysqli_query($link,$select);
 						 $tbl=mysqli_fetch_array($result);
 
@@ -284,7 +291,7 @@
 
 						
 						return $valorIndicador;
-						}	
+						}	// fim função tabelaPontuacao
 
 
 						$posicao = 1; // variavel de controle de indice
@@ -292,8 +299,8 @@
 							$vetorNomeTabela[$posicao] = $value; // vetor recebe o valor do vetor da ordem que encontrar
 							$posicao = $posicao +1; // adiciona +1 na posição do vetor 
 						}// fim foreach
-
-							$posicao = 1; // variavel de controle para a linha
+						
+							//$posicao = 1; // variavel de controle para a linha
 							$totalposicao = 2;
 							// for para consulta dos dados da semana
 							//for ($coluna=1; $coluna <$totalFunc ; $coluna++) {  // controla a quantidade de consultas
@@ -329,12 +336,13 @@
 									if ($posicao <$totalFunc) {
 										$posicao = $posicao+1;
 									}			
-									 if ($totalposicao <$totalFunc ) {
+									 if ($totalposicao <$totalFunc+1 ) {
 									 $totalposicao = $totalposicao +1;
 									} // fim if
+									
 								} // fim for								
 								
-								for ($indice=1; $indice <$totalFunc ; $indice++) { 
+								for ($indice=1; $indice <$totalFunc+1 ; $indice++) { 
 										$vetorTotalndAmarelo[$indice] = ($vetorSegAmarelo[$indice]+$vetorTerAmarelo[$indice]+$vetorQuaAmarelo[$indice]+$vetorQuiAmarelo[$indice]+$vetorSexAmarelo[$indice]);
 
 										$vetorTotalndAzul[$indice] = ($vetorSegAzul[$indice]+$vetorTerAzul[$indice]+$vetorQuaAzul[$indice]+$vetorQuiAzul[$indice]+$vetorSexAzul[$indice]);
@@ -347,8 +355,9 @@
 										
 									}
 
-								for ($coluna=1; $coluna <$totalFunc ; $coluna++) { 
-							
+
+								for ($coluna=1; $coluna <$totalFunc +1; $coluna++) { 
+								
 								echo"
 									<tr>
 									<td>".$vetorNomeTabela[$coluna]."</td>
@@ -620,7 +629,7 @@
 									}// fim da função
 									
 									$posicao = 1; 
-									 for ($linha=1; $linha < $totalFunc ; $linha++) { 
+									 for ($linha=1; $linha < $totalFunc+1 ; $linha++) { 
 										
 										
 										for ($coluna=0; $coluna <1 ; $coluna++) { 
@@ -648,7 +657,7 @@
 									
 
 
-									for ($indice=1; $indice <$totalFunc ; $indice++) { 
+									for ($indice=1; $indice <$totalFunc+1 ; $indice++) { 
 										$vetorTotalSemana[$indice] = ($vetorPontosSemana1[$indice]+$vetorPontosSemana2[$indice]+$vetorPontosSemana3[$indice]+$vetorPontosSemana4[$indice]);
 										if ($numSem >6) {
 											$vetorTotalSemana[$indice] = ($vetorPontosSemana6[$indice]);

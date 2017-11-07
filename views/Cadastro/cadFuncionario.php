@@ -8,6 +8,7 @@
 	$link = $conexaoBD->conectar();//armazena o retorno da tentativa de conexao do banco de dados
 
 	$selectSetor = " SELECT * FROM setor ORDER BY setor ASC ";//comando SQL de consulta na tabela Setor
+	
 	$resultSetor = mysqli_query($link, $selectSetor);//executa o comando SQL acima
 
 	if(isset($_GET) && !empty($_GET['resposta']))//verifica se a variavel resposta tem valor ou se esta nula

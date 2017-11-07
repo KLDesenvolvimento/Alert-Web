@@ -50,7 +50,7 @@
 			<div class="row">
 				<h5 class="center">Atualização de Comandos</h5>
 				<div class="row">
-					<form class="col s12 m12 l12" method="POST" action="../../controllers/atualizar/atualizarComando.php">
+					<form class="col s12 m12 l12" method="GET" action="../../controllers/atualizar/atualizarComando.php">
 						<div class="row">
 							<?php
 							for($i = 0; $i < $total; $i++){

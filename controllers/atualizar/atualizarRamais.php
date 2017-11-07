@@ -1,6 +1,6 @@
 <?php
 	require_once "../conexaoBD.php";
-
+	
 	$conexaoBD = new conexaoBD();
 	$link = $conexaoBD->conectar();
 
@@ -21,7 +21,7 @@
 		echo "<script>alert($erro); window.location.href='../../views/atualizar/atualizarRamais.php';</script>";
 	}
 
-	$updateRamais = " UPDATE ramais SET nomeRamal = '$nomeRamal', fkSetorRamal = '$setor', numeroRamal = '$numeroRamal' ";
+	$updateRamais = " UPDATE ramais SET nomeRamal = '$nomeRamal', fkSetorRamal = '$setor', numeroRamal = '$numeroRamal' WHERE idRamal = $idRamal ";
 	$resultUpdate = mysqli_query($link, $updateRamais);
 
 	if($resultUpdate){

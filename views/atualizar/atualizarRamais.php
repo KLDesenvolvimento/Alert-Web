@@ -5,6 +5,8 @@
 	$conexaoBD = new conexaoBD();
 	$link = $conexaoBD->conectar();
 
+
+
 	$id = $_GET['id'];
 
 	$selectSetor = " SELECT * FROM setor ORDER BY setor ASC ";
@@ -13,7 +15,7 @@
 	$selectRamais = " SELECT ramais.*, setor.* FROM ramais, setor WHERE ramais.idRamal = '$id' AND ramais.fkSetorRamal = setor.idSetor ";
 	$resultRamais = mysqli_query($link, $selectRamais);
 	$total = mysqli_num_rows($resultRamais);
-
+	
 	while($ramal = mysqli_fetch_array($resultRamais)){
 
 		$idRamal[] = $ramal['idRamal'];

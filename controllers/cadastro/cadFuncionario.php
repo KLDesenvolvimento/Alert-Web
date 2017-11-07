@@ -12,6 +12,7 @@
 	$fkSetor = $_POST['setor'];
 	$tipoAcesso = $_POST['acesso'];
 	$senhaMD5 = MD5($senha);
+	$status = '1';
 
 	if($nomeFuncionario == null){
 		$erro = "Nome do funcionario não pode ser em branco.";
@@ -42,7 +43,8 @@
 	}else{
 
 	//comando SQL
-	$insertFuncionario = " INSERT INTO funcionario (nomeFuncionario, usuario, senha, fkSetor, tipoUsuario) VALUES ('$nomeFuncionario', '$usuario', '$senhaMD5', '$fkSetor', '$tipoAcesso') ";//comando SQL de inserção na tabela de funcionario
+	$insertFuncionario = " INSERT INTO funcionario (nomeFuncionario, usuario, senha, fkSetor, tipoUsuario,status) VALUES ('$nomeFuncionario', '$usuario', '$senhaMD5', '$fkSetor', '$tipoAcesso','$status') ";//comando SQL de inserção na tabela de 
+	//funcionario
 	$resultFuncionario = mysqli_query($link, $insertFuncionario);//executa o comando SQL acima
 
 	if($resultFuncionario){
