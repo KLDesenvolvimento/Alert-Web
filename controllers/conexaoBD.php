@@ -3,8 +3,8 @@
 	class conexaoBD{//inicio da class conexao
 
 		private $servername = "localhost";//nome ou caminho do servidor
-		private $username = "root";//usuario do banco de dados
-		private $password = "";//senha do banco de dados
+		private $username = "kauanleo";//usuario do banco de dados
+		private $password = "admcds@a1r2g3s4@";//senha do banco de dados
 		private $dbname = "alert_web";//nome do banco de dados
 
 		public function conectar(){//inicio da funcao conectar
